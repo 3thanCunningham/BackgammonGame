@@ -1,6 +1,6 @@
 package backgammon;
 
-public class BackGammon {
+public class Backgammon {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
