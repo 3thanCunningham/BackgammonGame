@@ -3,31 +3,40 @@ package backgammon;
 public class BackGammon {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		//get player name
-		//Board board = new Board();
-		Player[] players = new Player[2];
+		Board board = new Board();
+		Player[] names = new Player[2];
 		Display display = new Display();
-		Dice diceOne = new Dice();
-		Dice diceTwo = new Dice();
+		Dice dice = new Dice();
+		names[0] = new Player(display.getName());
+		names[1] = new Player(display.getName());
 		
-		players[0] = new Player(display.getName()); players[1] = new
-		Player(display.getName());
-		 
-		System.out.println(players[0].getName());
-		 
+		Player[] player = dice.goesFirst(names[0], names[1]);
 		
-		System.out.println(diceOne.roll());
-		System.out.println(diceTwo.roll());
+		display.displayBoard(board);
 		
 		String input;
 		Command command;
+		
 		do {
-			input = display.getCommand();
+			input = display.getCommand(player[0]);
 			command = new Command(input);
+			if (command.isRoll());{
+				player[0].setRoll(dice.roll());
+				System.out.println(player[0].getName() + " rolls " + player[0].getRoll() + "\n");
+			}
+			
+			input = display.getCommand(player[1]);
+			command = new Command(input);
+			if (command.isRoll());{
+				player[1].setRoll(dice.roll());
+				System.out.println(player[1].getName() + " rolls " + player[1].getRoll()+ "\n");
+			}
 		}
 		while(!command.isQuit());
+		System.out.print("GAME OVER!");
 	}
+	
 
 }
