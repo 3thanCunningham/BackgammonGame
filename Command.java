@@ -2,13 +2,18 @@ package backgammon;
 
 public class Command {
 	
-	private enum CommandType {QUIT, ROLL, PIPCOUNT, HINT, INVALID};
+	private enum CommandType {QUIT, ROLL, PIPCOUNT, HINT, INVALID, REPLAY};
 	private CommandType commandType;
 	
-	Command (String input) {
-		String inputFormatted = input.trim().toUpperCase();
+	Command(){
+		commandType = CommandType.INVALID;
+	}
+	
+	public void setCommand (String input) {
 		
 		commandType = CommandType.INVALID;
+		
+		String inputFormatted = input.trim().toUpperCase();
 		
 		if (inputFormatted.equals("Q")) {
 			commandType = CommandType.QUIT;
@@ -26,8 +31,12 @@ public class Command {
 			commandType = CommandType.HINT;
 		}
 		
+		if (inputFormatted.equals("Y")) {
+			commandType = CommandType.REPLAY;
+		}
 		
 	}
+	
 	
 	public boolean isQuit() {
 		return commandType == CommandType.QUIT;
@@ -44,6 +53,10 @@ public class Command {
 	public boolean isHint() {
 		return commandType == CommandType.HINT;
 	}
+	
+	public boolean isReplay() {
+		return commandType == CommandType.REPLAY;
+	}	
 	
 	public boolean isValid() {
 		return commandType != CommandType.INVALID;
