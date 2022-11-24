@@ -8,20 +8,21 @@ public class Dice {
 		return (int) roll;
 	}
 	
-public Player[] goesFirst(Player player1, Player player2){
+	public Player[] goesFirst(Player player1, Player player2){
 	Dice dice = new Dice();
+	int roll1, roll2;
 	
 	do {
-		player1.setRoll(dice.roll());
-		System.out.println("\n" + player1.getName() + " rolls " + player1.getRoll());
+		roll1 = dice.roll();
+		System.out.println("\n" + player1.getName() + " rolls " + roll1);
 		
-		player2.setRoll(dice.roll());
-		System.out.println(player2.getName() + " rolls " + player2.getRoll());
+		roll2 = dice.roll();
+		System.out.println(player2.getName() + " rolls " + roll2);
 	}
 	
-	while(player1.getRoll() == player2.getRoll());
+	while(roll1 == roll2);
 	
-	if(player1.getRoll() > player2.getRoll()) {
+	if(roll1 > roll2) {
 		System.out.println("\n" + player1.getName()+" Goes First! \n");
 		return new Player[] {player1,player2};
 	}
