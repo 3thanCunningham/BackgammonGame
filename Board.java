@@ -6,12 +6,15 @@ public class Board {
 	public static final int NUM_STACKS = 24;
 	private List<Stack<Checker>> stacks;
 	private int playerOneBear, playerTwoBear;
-
+	private Checker WhiteChecker;
+	private Checker RedChecker;
+	
 	Board(){
 		playerOneBear =0;
 		playerTwoBear =0;
 		
-		
+		WhiteChecker = new Checker(CheckerColour.WHITE);
+		RedChecker = new Checker(CheckerColour.RED);
 		stacks = new ArrayList<>(NUM_STACKS);
 		for(int i=0;i<NUM_STACKS;i++) {
 			stacks.add(new Stack<>());		
@@ -43,6 +46,18 @@ public class Board {
 		return stacks.get(index);
 	}
 	
+	public int getStackSize(int index) {
+		return stacks.get(index).size();
+	}
+	
+	public boolean isStackEmpty(int index) {
+		return stacks.get(index).isEmpty();
+	}
+	
+	public CheckerColour getStackColour(int index) {
+		return stacks.get(index).peek().getColour();
+	}
+	
 	public int maxStackSize(){
 		int maxStackSize = 0;
 		for (Stack<Checker> stack : stacks) {
@@ -68,5 +83,18 @@ public class Board {
 		else
 			return false;
 	}
+	
+	public void move(int point1, int point2) {
+		
+		if(stacks.get(point1).peek().getColour()==CheckerColour.RED) {
+			stacks.get(point1).pop();
+			stacks.get(point2).push(RedChecker);
+		}
+		else {
+			stacks.get(point1).pop();
+			stacks.get(point2).push(WhiteChecker);
+		}
+	}
+	
 }
 
