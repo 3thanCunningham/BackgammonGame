@@ -1,78 +1,104 @@
 package backgammon;
 
 public class BackGammon {
+	public static final int NUMBER_OF_PLAYERS = 2;
 
 	public static void main(String[] args) {
 
-		//get player name
-		Board board = new Board();
+		System.out.println("------WELCOME TO BACKGAMMON - LETS PLAY!--------");
 		Player[] names = new Player[2];
 		Display display = new Display();
 		Dice dice = new Dice();
 		names[0] = new Player(display.getName());
 		names[1] = new Player(display.getName());
-		
-		Player[] player = dice.goesFirst(names[0], names[1]);
-		player[0].setBoard(BoardType.CLOCKWISE);
-		player[1].setBoard(BoardType.ANTICLOCKWISE);
-		
+
 		String input;
-		Command command;
-		
+		Command command = new Command();
+		Game game;
 		do {
+			Board board = new Board();
+			Player[] player = dice.goesFirst(names[0], names[1]);
+			player[0].setBoard(BoardType.CLOCKWISE);
+			player[1].setBoard(BoardType.ANTICLOCKWISE);
+			player[0].setColour(CheckerColour.WHITE);
+			display.displayBoard(board, player[0]);
+
+			do {
+				for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
+
+					boolean isTurnOver = true;
+
+					do {
+						System.out.println(player[i].getName() + " , Enter 'r' to roll, or 'q' to quit: ");
+
+						input = display.getCommand(player[i]);
+						command.setCommand(input);
+
+						if (command.isQuit()) {
+							break;
+						} else if (!command.isValid()) {
+							System.out.println("Invalid Syntax - Try Again");
+							isTurnOver = false;
+						} else if (command.isRoll()) {
+							player[i].setRoll(dice.roll(), dice.roll());
+
+							System.out.print(player[i].getName() + " rolls " + player[i].getRoll(0) + " and "
+									+ player[i].getRoll(1));
+
+							if (player[i].isDouble()) {
+								System.out
+										.print(" and " + player[i].getRoll(0) + " and " + player[i].getRoll(0) + "\n");
+							}
+							System.out.println();
+
+							int moves = 2;
+							if (player[i].isDouble()) {
+								moves = 4;
+							}
+
+							for (int j = 0; j < moves; j++) {
+								game = new Game(board, player[i].getBoardType(), player[i].getRoll(0),
+										player[i].getRoll(1), player[i].isDouble(), player[i].getColour());
+								game.findHints();
+								game.giveHints();
+
+								if(game.isMoveAvailable()) { 
+									boolean isMoveDone = false; 
+									do {
+									input = display.getCommand(player[i]);
+									System.out.println(input);
+									if(game.isInputValid(input)) {
+										game.Move(input); 
+										isMoveDone=true;
+										} 
+									else {
+										System.out.println("Invalid input - try again");
+										} 
+									} 
+									while(!isMoveDone);
+									}
+								else { System.out.println("No Valid Moves - Skipping Your Turn"); }
+								
+								display.displayBoard(board, player[i]);
+
+							}
+						} else {
+							System.out.println("Invalid Command - Please Enter 'r' to roll, or 'q' to quit: ");
+							isTurnOver = false;
+						}
+					} while (!isTurnOver);
+				}
+			}
+
+			while (!command.isQuit());// && !game.isOver());
+
+			System.out.println("GAME OVER!");
+			System.out.println("PLAYER 1. You decide. Would you like to play again? (y/n): ");
 			input = display.getCommand(player[0]);
-			command = new Command(input);
-			
-			if(command.isValid()) {
-			
-			if (command.isRoll()){
-				display.displayBoard(board,player[0]);
-				player[0].setRoll(dice.roll());
-				System.out.println(player[0].getName() + " rolls " + player[0].getRoll() + "\n");
-			} 
-			
-			else if (command.isHint()){
-				System.out.println("\nHints:\nEnter 'R' or 'r' to roll \nEnter 'P' or 'p' for pipcount \nEnter 'Q' or 'q' to quit \n");
-			}
-			
-			else if (command.isPipCount()){
-				System.out.println("\n" + player[0].getName() + " has " + player[0].getPipCount() + " pips");
-				System.out.println(player[1].getName() + " has " + player[1].getPipCount() + " pips\n");
-			}
-			}
-			else {
-				System.out.println("Invalid Syntax - Try Again\n");
-			}
-			
-			input = display.getCommand(player[1]);
-			command = new Command(input);
-			
-			if(command.isValid()) {
-			
-			if (command.isRoll()){
-				display.displayBoard(board,player[1]);
-				player[1].setRoll(dice.roll());
-				System.out.println(player[1].getName() + " rolls " + player[1].getRoll()+ "\n");
-				
-			} 
-			
-			else if (command.isHint()){
-				System.out.println("\nHints:\nEnter 'R' or 'r' to roll \nEnter 'P' or 'p' for pipcount \nEnter 'Q' or 'q' to quit \n");
-			}
-			
-			else if(command.isPipCount()){
-					System.out.println("\n" + player[0].getName() + " has " + player[0].getPipCount() + " pips");
-					System.out.println(player[1].getName() + " has " + player[1].getPipCount() + " pips\n");
-			}
-				
-			}
-			else {
-				System.out.println("Invalid Syntax - Try Again\n");
-			}
-		}
-		while(!command.isQuit());
-		System.out.print("GAME OVER!");
+			command.setCommand(input);
+
+		} while (command.isReplay());
+
 	}
-	
 
 }
