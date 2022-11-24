@@ -130,10 +130,10 @@ public class Display {
 	public String getCommand(Player player) {
 		System.out.print(player.getName() + " enter command: ");
 		String input = in.nextLine();
-		input.trim().toUpperCase();
 		return input;
 	}
 	
+
 }
 
 
