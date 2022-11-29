@@ -8,71 +8,51 @@ public class Game {
 	private ArrayList<String> letters;
 	private Board board;
 	private boolean isGameOver;
-	private boolean isDouble;
 	private BoardType boardType;
-	private int roll1, roll2;
 	private CheckerColour playerColour;
 
-	Game(Board board, BoardType boardType, int roll1, int roll2, boolean isDouble, CheckerColour colour){
+	Game(Board board, BoardType boardType, CheckerColour colour){
 		this.board = board;
 		isGameOver = false;
 		this.boardType = boardType;
-		this.roll1 = roll1;
-		this.roll2 = roll2;
-		this.isDouble = isDouble;
 		playerColour = colour;
 		hintsString = new ArrayList<String>();
 		hintsInteger = new ArrayList<Integer>();
 		letters = new ArrayList<String>();
 	}
 	
-	public void findHints() {
+	public void findHints(int roll) {
 		
 		if(boardType==BoardType.ANTICLOCKWISE) {
-			roll1*=-1;
-			roll2*=-1;
+			roll*=-1;
 		}
 		
-		String hint = null;
+		String hint = "";
 		
 		for(int i=0; i<NUMBER_OF_POINTS;i++) {
 			
 			int point1 = i+1;
 			int point2;
 			
-			if((!board.getStack(i).isEmpty()) && (i+roll1 < NUMBER_OF_POINTS) && (i+roll2 < NUMBER_OF_POINTS) && (i+roll1 > 0) && (i+roll2 > 0)) {
+			if((!board.getStack(i).isEmpty()) && (i+roll < NUMBER_OF_POINTS) && (i+roll > 0)) {
 			
 			if(playerColour==board.getStackColour(i)) {
 				
-				if(board.getStack(i+roll1).isEmpty()) {
-					point2 = point1+roll1;
+				if(board.getStack(i+roll).isEmpty()) {
+					point2 = point1+roll;
 					hint = "( "+ point1 + " , " + point2 + " )";
 					hintsString.add(hint);
 					hintsInteger.add(point1);
 					hintsInteger.add(point2);
 				}
-				else if(playerColour==board.getStackColour(i+roll1) || (board.getStackSize(i+roll1) == 1) ){
-					point2 = point1+roll1;
+				else if(playerColour==board.getStackColour(i+roll) || (board.getStackSize(i+roll) == 1) ){
+					point2 = point1+roll;
 					hint = "( "+ point1 + " , " + point2 + " )";
 					hintsString.add(hint);
 					hintsInteger.add(point1);
 					hintsInteger.add(point2);
 				}
 				
-				if(board.getStack(i+roll2).isEmpty()) {
-					point2 = point1+roll2;
-					hint = "( "+ point1 + " , " + point2 + " )";
-					hintsString.add(hint);
-					hintsInteger.add(point1);
-					hintsInteger.add(point2);
-				}
-				else if(playerColour==board.getStackColour(i+roll2) || (board.getStackSize(i+roll2) == 1)) {
-					point2 = point1+roll2;
-					hint = "( "+ point1 + " , " + point2 + " )";
-					hintsString.add(hint);
-					hintsInteger.add(point1);
-					hintsInteger.add(point2);
-				}
 			}
 			
 		}
@@ -122,6 +102,21 @@ public class Game {
 		point2-=1;
 		
 		board.move(point1, point2);
+	}
+	
+	public int diceRollUsed(String input) {
+int point1, point2;
+		
+		String inputFormatted = input.trim().toUpperCase();
+		int index=letters.indexOf(inputFormatted);
+		index*=2;
+		
+		point1 = hintsInteger.get(index);
+		point2 = hintsInteger.get(index+1);
+		
+		int roll = Math.abs(point2-point1);
+		
+		return roll;
 	}
 	
 	public boolean isOver() {
