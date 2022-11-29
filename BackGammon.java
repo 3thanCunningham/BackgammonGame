@@ -23,6 +23,7 @@ public class BackGammon {
 			player[0].setColour(CheckerColour.WHITE);
 			display.displayBoard(board, player[0]);
 
+
 			do {
 				for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
 
@@ -42,27 +43,32 @@ public class BackGammon {
 						} else if (command.isRoll()) {
 							player[i].setRoll(dice.roll(), dice.roll());
 
-							System.out.print(player[i].getName() + " rolls " + player[i].getRoll(0) + " and "
-									+ player[i].getRoll(1));
+							System.out.print(player[i].getName() + " rolls : " + player[i].getRoll(0) + " " + player[i].getRoll(1) +" ");
 
-							if (player[i].isDouble()) {
-								System.out
-										.print(" and " + player[i].getRoll(0) + " and " + player[i].getRoll(0) + "\n");
+							if (player[i].isDouble()) { 
+								System.out.print(player[i].getRoll(0) + " " + player[i].getRoll(0) + "\n");
 							}
+							 
 							System.out.println();
-
+						
 							int moves = 2;
-							if (player[i].isDouble()) {
-								moves = 4;
+							
+							if (player[i].isDouble()){ 
+								moves = 4; 
 							}
-
-							for (int j = 0; j < moves; j++) {
-								game = new Game(board, player[i].getBoardType(), player[i].getRoll(0),
-										player[i].getRoll(1), player[i].isDouble(), player[i].getColour());
-								game.findHints();
-								game.giveHints();
-
-								if(game.isMoveAvailable()) { 
+							
+							
+							do {
+							game = new Game(board, player[i].getBoardType(), player[i].getColour());
+							
+							game.findHints(player[i].getRoll(0));
+							if(moves==2 && !player[i].isDouble()) {
+								game.findHints(player[i].getRoll(1));
+							}
+							
+							game.giveHints();
+							
+							if(game.isMoveAvailable()) { 
 									boolean isMoveDone = false; 
 									do {
 									input = display.getCommand(player[i]);
@@ -70,6 +76,12 @@ public class BackGammon {
 									if(game.isInputValid(input)) {
 										game.Move(input); 
 										isMoveDone=true;
+										moves--;
+										if(game.diceRollUsed(input)==player[i].getRoll(0)) {
+											int rollLeft = player[i].getRoll(1); 
+											player[i].setRoll(rollLeft, rollLeft);
+										}
+										display.displayBoard(board, player[i]);
 										} 
 									else {
 										System.out.println("Invalid input - try again");
@@ -77,12 +89,13 @@ public class BackGammon {
 									} 
 									while(!isMoveDone);
 									}
-								else { System.out.println("No Valid Moves - Skipping Your Turn"); }
-								
-								display.displayBoard(board, player[i]);
-
+								else { 
+									System.out.println("No Valid Moves - Skipping Your Turn"); 
+								}
 							}
-						} else {
+							while(moves>0);
+							}
+						 else {
 							System.out.println("Invalid Command - Please Enter 'r' to roll, or 'q' to quit: ");
 							isTurnOver = false;
 						}
@@ -97,8 +110,8 @@ public class BackGammon {
 			input = display.getCommand(player[0]);
 			command.setCommand(input);
 
-		} while (command.isReplay());
+		}
+		while (command.isReplay());
 
-	}
-
+}
 }
