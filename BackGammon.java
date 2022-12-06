@@ -5,9 +5,10 @@ public class BackGammon {
 
 	public static void main(String[] args) {
 
-		System.out.println("------WELCOME TO BACKGAMMON - LETS PLAY!--------");
+		
 		Player[] names = new Player[2];
 		Display display = new Display();
+		display.openingScreen();
 		Dice dice = new Dice();
 		names[0] = new Player(display.getName());
 		names[1] = new Player(display.getName());
@@ -91,6 +92,7 @@ public class BackGammon {
 									}
 								else { 
 									System.out.println("No Valid Moves - Skipping Your Turn"); 
+									moves=0;
 								}
 							}
 							while(moves>0);
