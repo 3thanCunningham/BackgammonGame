@@ -133,6 +133,9 @@ public class Display {
 		return input;
 	}
 	
+	public void openingScreen(){
+		System.out.println("------WELCOME TO BACKGAMMON - LETS PLAY!--------");
+	}
 
 }
 
