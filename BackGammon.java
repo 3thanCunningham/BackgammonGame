@@ -21,9 +21,8 @@ public class BackGammon {
 			Player[] player = dice.goesFirst(names[0], names[1]);
 			player[0].setBoard(BoardType.CLOCKWISE);
 			player[1].setBoard(BoardType.ANTICLOCKWISE);
-			player[0].setColour(CheckerColour.WHITE);
-			display.displayBoard(board, player[0]);
-
+			player[0].setColour(CheckerColour.RED);
+			player[1].setColour(CheckerColour.WHITE);
 
 			do {
 				for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
@@ -31,6 +30,7 @@ public class BackGammon {
 					boolean isTurnOver = true;
 
 					do {
+						display.displayBoard(board, player[i]);
 						System.out.println(player[i].getName() + " , Enter 'r' to roll, or 'q' to quit: ");
 
 						input = display.getCommand(player[i]);
@@ -73,6 +73,7 @@ public class BackGammon {
 									boolean isMoveDone = false; 
 									do {
 									input = display.getCommand(player[i]);
+									command.setCommand(input);
 									System.out.println(input);
 									if(game.isInputValid(input)) {
 										game.getMove(input);
@@ -109,7 +110,7 @@ public class BackGammon {
 				}
 			}
 
-			while (!command.isQuit());// && !game.isOver());
+			while (!command.isQuit() && !board.isGameOver());
 
 			System.out.println("GAME OVER!");
 			System.out.println("PLAYER 1. You decide. Would you like to play again? (y/n): ");
