@@ -15,7 +15,8 @@ public class BackGammon {
 
 		String input;
 		Command command = new Command();
-		Game game;
+		Game game = new Game();
+		
 		do {
 			Board board = new Board();
 			Player[] player = dice.goesFirst(names[0], names[1]);
@@ -26,8 +27,6 @@ public class BackGammon {
 
 			do {
 				for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
-
-					boolean isTurnOver = true;
 
 					do {
 						display.displayBoard(board, player[i]);
@@ -40,7 +39,6 @@ public class BackGammon {
 							break;
 						} else if (!command.isValid()) {
 							System.out.println("Invalid Syntax - Try Again");
-							isTurnOver = false;
 						} else if (command.isRoll()) {
 							player[i].setRoll(dice.roll(), dice.roll());
 
@@ -101,12 +99,12 @@ public class BackGammon {
 								}
 							}
 							while(moves>0);
+							game.endTurn();
 							}
 						 else {
-							System.out.println("Invalid Command - Please Enter 'r' to roll, or 'q' to quit: ");
-							isTurnOver = false;
+							System.out.println("Invalid Command");
 						}
-					} while (!isTurnOver);
+					} while (!game.isTurnOver());
 				}
 			}
 
