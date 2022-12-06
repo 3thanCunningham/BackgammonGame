@@ -98,8 +98,16 @@ public class Board {
 		}
 	}
 	
-	public void addToBar(Checker checker) {
-		bar.push(checker);
+	public void addToBar(int point) {
+		if(stacks.get(point).peek().getColour()==CheckerColour.RED) {
+			bar.push(RedChecker);
+		}
+		else {
+			bar.push(WhiteChecker);
+		}
+		
+		stacks.get(point).pop();
+		
 	}
 	
 	public void removeFromBar() {
