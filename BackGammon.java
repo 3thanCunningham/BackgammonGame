@@ -78,7 +78,7 @@ public class BackGammon {
 										if(game.isMovetoBar()) {
 											game.MovetoBar();
 										}
-										game.Move(); 
+										game.Move();
 										isMoveDone=true;
 										moves--;
 										if(game.diceRollUsed(input)==player[i].getRoll(0)) {

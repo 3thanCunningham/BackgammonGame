@@ -26,21 +26,21 @@ public class Board {
 		Checker RedChecker = new Checker(CheckerColour.RED);
 		
 		for(int i=0;i<5;i++) {
-			stacks.get(5).push(RedChecker);
-			stacks.get(12).push(RedChecker);
+			stacks.get(5).push(WhiteChecker);
+			stacks.get(0).push(WhiteChecker);
 			
-			stacks.get(11).push(WhiteChecker);
-			stacks.get(18).push(WhiteChecker);
+			stacks.get(11).push(RedChecker);
+			stacks.get(18).push(RedChecker);
 		}
 		
 		for( int i=0;i<3;i++) {
-			stacks.get(7).push(RedChecker);
-			stacks.get(16).push(WhiteChecker);	
+			stacks.get(16).push(RedChecker);
+			stacks.get(4).push(WhiteChecker);	
 		}
 		
 		for( int i=0;i<2;i++) {
-			stacks.get(0).push(WhiteChecker);
-			stacks.get(23).push(RedChecker);	
+			stacks.get(1).push(WhiteChecker);
+			stacks.get(17).push(RedChecker);	
 		}
 	}
 	
@@ -77,6 +77,15 @@ public class Board {
 		case 2: bear = playerTwoBear;
 		}
 		return bear;
+	}
+	
+	public void bearOff(CheckerColour colour) {
+		if(colour==CheckerColour.RED) {
+			playerOneBear++;
+		}
+		else {
+			playerTwoBear++;
+		}
 	}
 	
 	public boolean StackIndexEmpty(int j, int i) {
@@ -122,6 +131,15 @@ public class Board {
 		return bar.peek();
 	}
 	
+	public void pushToStack(int index, CheckerColour colour) {
+		if(colour==CheckerColour.RED) {
+			stacks.get(index).push(RedChecker);
+		}
+		else {
+			stacks.get(index).push(WhiteChecker);
+		}
+	}
+	
 	public boolean isGameOver() {
 		boolean isGameOver = false;
 		
@@ -129,6 +147,36 @@ public class Board {
 			isGameOver = true;
 		}
 		return isGameOver;
+	}
+	
+	public boolean isHomeBoardFull(CheckerColour colour) {
+		boolean isHomeBoardFull = false;
+		
+		int checkersInHomeBoard=0;
+		
+		if(colour==CheckerColour.WHITE) {
+			for(int i=0;i<6;i++) {
+				if(!stacks.get(i).empty() && stacks.get(i).peek().getColour()==CheckerColour.WHITE) {
+					checkersInHomeBoard+=stacks.get(i).size();
+				}
+			}
+			if(checkersInHomeBoard==15-playerTwoBear) {
+				isHomeBoardFull=true;
+			}
+		}
+		else {
+			for(int i=18;i<24;i++) {
+				if(!stacks.get(i).empty() && stacks.get(i).peek().getColour()==CheckerColour.RED) {
+					checkersInHomeBoard+=stacks.get(i).size();
+				}
+		}
+			if(checkersInHomeBoard==15-playerOneBear) {
+				isHomeBoardFull=true;
+			}
+		}
+			
+		
+		return isHomeBoardFull;
 	}
 }
 

@@ -32,7 +32,47 @@ public class Game {
 	
 	public void findHints(int roll) {
 		String hint = "";
-
+		
+		if(board.hasCheckerOnBar() && board.getBar().getColour()==playerColour) {
+			if(boardType==BoardType.CLOCKWISE) {
+				if(board.getStack(roll-1).isEmpty() || board.getStackColour(roll-1)==playerColour) {
+					hint = "(  BAR , " + (roll) + " )";
+					hintsString.add(hint);
+					hintsInteger.add(26);
+					hintsInteger.add(roll);
+				}
+			}
+			else {
+				if(board.getStack(24-roll).isEmpty() || board.getStackColour(24-roll)==playerColour) {
+					hint = "(  BAR , " + (25-roll) + " )";
+					hintsString.add(hint);
+					hintsInteger.add(26);
+					hintsInteger.add(25-roll);
+				}
+			}
+		}
+		else {
+		if(board.isHomeBoardFull(playerColour)) {
+			if(boardType==BoardType.CLOCKWISE) {
+				if(!board.isStackEmpty(24-roll)) {
+					hint = "( "+ (25-roll) + " , BEAR-OFF )";
+					hintsString.add(hint);
+					hintsInteger.add(25-roll);
+					hintsInteger.add(25-roll);
+				}
+			}
+			else {
+				if(!board.isStackEmpty(roll-1)) {
+					hint = "( "+ (roll) + " , BEAR-OFF )";
+					hintsString.add(hint);
+					hintsInteger.add(roll);
+					hintsInteger.add(roll);
+				}
+			}
+		}
+		
+		
+	
 		if(boardType==BoardType.CLOCKWISE) {
 			
 		for(int i=0; i<NUMBER_OF_POINTS;i++) {
@@ -95,8 +135,10 @@ public class Game {
 			}
 				
 			}
-		
+		}
 	}
+	
+
 	
 	public void giveHints() {
 		
@@ -142,7 +184,17 @@ public class Game {
 	}
 	
 	public void Move() {
+		if(toPointTwo==fromPointOne) {
+			board.getStack(fromPointOne).pop();
+			board.bearOff(playerColour);
+		}
+		else if(fromPointOne==25){
+			board.removeFromBar();
+			board.pushToStack(toPointTwo, playerColour);
+		}
+		else {
 		board.move(fromPointOne, toPointTwo);
+		}
 	}
 	
 	
@@ -179,5 +231,10 @@ public class Game {
 	
 	public boolean isTurnOver() {
 		return isTurnOver;
+	}
+	
+	public void BearOff() {
+		board.getStack(fromPointOne).pop();
+		board.bearOff(playerColour);
 	}
 }
