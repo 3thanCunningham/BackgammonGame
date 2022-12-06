@@ -26,21 +26,21 @@ public class Board {
 		Checker RedChecker = new Checker(CheckerColour.RED);
 		
 		for(int i=0;i<5;i++) {
-			stacks.get(5).push(WhiteChecker);
-			stacks.get(12).push(WhiteChecker);
+			stacks.get(5).push(RedChecker);
+			stacks.get(12).push(RedChecker);
 			
-			stacks.get(11).push(RedChecker);
-			stacks.get(18).push(RedChecker);
+			stacks.get(11).push(WhiteChecker);
+			stacks.get(18).push(WhiteChecker);
 		}
 		
 		for( int i=0;i<3;i++) {
-			stacks.get(7).push(WhiteChecker);
-			stacks.get(16).push(RedChecker);	
+			stacks.get(7).push(RedChecker);
+			stacks.get(16).push(WhiteChecker);	
 		}
 		
 		for( int i=0;i<2;i++) {
-			stacks.get(0).push(RedChecker);
-			stacks.get(23).push(WhiteChecker);	
+			stacks.get(0).push(WhiteChecker);
+			stacks.get(23).push(RedChecker);	
 		}
 	}
 	
@@ -120,6 +120,15 @@ public class Board {
 	
 	public Checker getBar() {
 		return bar.peek();
+	}
+	
+	public boolean isGameOver() {
+		boolean isGameOver = false;
+		
+		if(playerOneBear==15 || playerTwoBear==15) {
+			isGameOver = true;
+		}
+		return isGameOver;
 	}
 }
 
