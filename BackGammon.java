@@ -75,7 +75,11 @@ public class BackGammon {
 									input = display.getCommand(player[i]);
 									System.out.println(input);
 									if(game.isInputValid(input)) {
-										game.Move(input); 
+										game.getMove(input);
+										if(game.isMovetoBar()) {
+											game.MovetoBar();
+										}
+										game.Move(); 
 										isMoveDone=true;
 										moves--;
 										if(game.diceRollUsed(input)==player[i].getRoll(0)) {
