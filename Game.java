@@ -11,7 +11,12 @@ public class Game {
 	private BoardType boardType;
 	private CheckerColour playerColour;
 	private int fromPointOne, toPointTwo;
+	private boolean isTurnOver;
 
+	Game(){
+		isTurnOver=false;
+	}
+	
 	Game(Board board, BoardType boardType, CheckerColour colour){
 		this.board = board;
 		isGameOver = false;
@@ -22,22 +27,20 @@ public class Game {
 		letters = new ArrayList<String>();
 		fromPointOne=0;
 		toPointTwo=0;
+		isTurnOver = false;
 	}
 	
 	public void findHints(int roll) {
-		
-		if(boardType==BoardType.ANTICLOCKWISE) {
-			roll*=-1;
-		}
-		
 		String hint = "";
-		
+
+		if(boardType==BoardType.CLOCKWISE) {
+			
 		for(int i=0; i<NUMBER_OF_POINTS;i++) {
 			
 			int point1 = i+1;
 			int point2;
 			
-			if((!board.getStack(i).isEmpty()) && (i+roll < NUMBER_OF_POINTS) && (i+roll > 0)) {
+			if((!board.getStack(i).isEmpty()) && (i+roll < NUMBER_OF_POINTS) ) {
 			
 			if(playerColour==board.getStackColour(i)) {
 				
@@ -60,6 +63,38 @@ public class Game {
 			
 		}
 		}
+		}
+		else {
+			for(int i=NUMBER_OF_POINTS-1; i>=0;i--) {
+				
+				int point1=i+1;
+				int point2;
+				
+				if((!board.getStack(i).isEmpty()) && (i-roll >=0) ) {
+				
+				if(playerColour==board.getStackColour(i)) {
+					
+					if(board.getStack(i-roll).isEmpty()) {
+						point2 = point1-roll;
+						hint = "( "+ (25-point1) + " , " + (25-point2) + " )";
+						hintsString.add(hint);
+						hintsInteger.add(point1);
+						hintsInteger.add(point2);
+					}
+					else if(playerColour==board.getStackColour(i-roll) || (board.getStackSize(i-roll) == 1) ){
+						point2 = point1-roll;
+						hint = "( "+ (25-point1) + " , " + (25-point2) + " )";
+						hintsString.add(hint);
+						hintsInteger.add(point1);
+						hintsInteger.add(point2);
+					}
+					
+				}
+				
+			}
+			}
+				
+			}
 		
 	}
 	
@@ -118,6 +153,9 @@ public class Game {
 	}
 	
 	public boolean isOver() {
+		if(board.getBear(1)==15 || board.getBear(2)==15) {
+			isGameOver=true;
+		}
 		return isGameOver;
 	}
 	
@@ -133,5 +171,13 @@ public class Game {
 	
 	public void MovetoBar() {
 		board.addToBar(toPointTwo);
+	}
+	
+	public void endTurn() {
+		isTurnOver = true;
+	}
+	
+	public boolean isTurnOver() {
+		return isTurnOver;
 	}
 }
