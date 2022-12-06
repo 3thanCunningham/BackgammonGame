@@ -10,6 +10,7 @@ public class Game {
 	private boolean isGameOver;
 	private BoardType boardType;
 	private CheckerColour playerColour;
+	private int fromPointOne, toPointTwo;
 
 	Game(Board board, BoardType boardType, CheckerColour colour){
 		this.board = board;
@@ -19,6 +20,8 @@ public class Game {
 		hintsString = new ArrayList<String>();
 		hintsInteger = new ArrayList<Integer>();
 		letters = new ArrayList<String>();
+		fromPointOne=0;
+		toPointTwo=0;
 	}
 	
 	public void findHints(int roll) {
@@ -88,38 +91,47 @@ public class Game {
 		return isInputValid;
 	}
 	
-	public void Move(String input) {
-		int point1, point2;
+	
+	
+	public void getMove(String input) {
 		
 		String inputFormatted = input.trim().toUpperCase();
 		int index=letters.indexOf(inputFormatted);
 		index*=2;
 		
-		point1 = hintsInteger.get(index);
-		point2 = hintsInteger.get(index+1);
+		fromPointOne = hintsInteger.get(index);
+		toPointTwo = hintsInteger.get(index+1);
 		
-		point1-=1;
-		point2-=1;
-		
-		board.move(point1, point2);
+		fromPointOne-=1;
+		toPointTwo-=1;
 	}
 	
+	public void Move() {
+		board.move(fromPointOne, toPointTwo);
+	}
+	
+	
 	public int diceRollUsed(String input) {
-int point1, point2;
-		
-		String inputFormatted = input.trim().toUpperCase();
-		int index=letters.indexOf(inputFormatted);
-		index*=2;
-		
-		point1 = hintsInteger.get(index);
-		point2 = hintsInteger.get(index+1);
-		
-		int roll = Math.abs(point2-point1);
+		int roll = Math.abs(toPointTwo-fromPointOne);
 		
 		return roll;
 	}
 	
 	public boolean isOver() {
 		return isGameOver;
+	}
+	
+	public boolean isMovetoBar() {
+		boolean isMovetoBar=false;
+		if(!board.getStack(toPointTwo).isEmpty()) {
+		if((board.getStackColour(fromPointOne)!=board.getStackColour(toPointTwo))){
+			isMovetoBar = true;
+		}
+		}
+		return isMovetoBar;
+	}
+	
+	public void MovetoBar() {
+		board.addToBar(toPointTwo);
 	}
 }
