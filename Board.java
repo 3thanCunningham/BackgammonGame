@@ -5,6 +5,7 @@ public class Board {
 	 
 	public static final int NUM_STACKS = 24;
 	private List<Stack<Checker>> stacks;
+	private Stack<Checker> bar;
 	private int playerOneBear, playerTwoBear;
 	private Checker WhiteChecker;
 	private Checker RedChecker;
@@ -16,6 +17,7 @@ public class Board {
 		WhiteChecker = new Checker(CheckerColour.WHITE);
 		RedChecker = new Checker(CheckerColour.RED);
 		stacks = new ArrayList<>(NUM_STACKS);
+		bar = new Stack<>();
 		for(int i=0;i<NUM_STACKS;i++) {
 			stacks.add(new Stack<>());		
 			}
@@ -96,5 +98,20 @@ public class Board {
 		}
 	}
 	
+	public void addToBar(Checker checker) {
+		bar.push(checker);
+	}
+	
+	public void removeFromBar() {
+		bar.pop();
+	}
+	
+	public boolean hasCheckerOnBar(){
+		return !bar.isEmpty();
+	}
+	
+	public Checker getBar() {
+		return bar.peek();
+	}
 }
 
