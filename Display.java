@@ -21,7 +21,7 @@ public class Display {
 		
 		if(player.getBoardType() == BoardType.ANTICLOCKWISE) {
 		System.out.print("\n  12   11   10   9    8    7   | BAR |  6    5    4    3    2    1 ");
-		System.out.println("	" + player.getName() + "'sCheckers Beared Off: " + board.getBear(2));
+		System.out.println("	" + player.getName() + "'s Checkers Beared Off: " + board.getBear(2));
 		}
 		else {
 		System.out.print("\n  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 ");
@@ -36,14 +36,14 @@ public class Display {
 				 if(n == 17) {
 				    	if( board.StackIndexEmpty(n,m) == true)
 				    	{
-				    		System.out.print("  *   |     | ");
+				    		System.out.print("      |     | ");
 				    	}
 				    	else
 						System.out.print(board.getStack(n).get(m).toString()+" |     | ");
 					}
 					
 				    else if( board.StackIndexEmpty(n,m) == true)
-						System.out.print("  *  ");
+						System.out.print("     ");
 				
 				else 
 					System.out.print(board.getStack(n).get(m).toString());
@@ -66,14 +66,14 @@ public class Display {
 			    if(j == 6) {
 			    	if( board.StackIndexEmpty(j,i) == true)
 			    	{
-			    		System.out.print("  *   |     | ");
+			    		System.out.print("      |     | ");
 			    	}
 			    	else
 					System.out.print(board.getStack(j).get(i).toString()+" |     | ");
 				}
 				
 			    else if( board.StackIndexEmpty(j,i) == true)
-					System.out.print("  *  ");
+					System.out.print("     ");
 				
 				else 
 					System.out.print(board.getStack(j).get(i).toString());
@@ -83,10 +83,10 @@ public class Display {
 		}
 		System.out.println("  -----------------------------------------------------------------");
 		if(player.getBoardType() == BoardType.ANTICLOCKWISE) {
-		System.out.println("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 \n");
+		System.out.println("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 \n\nStuck?, enter 'h' for hints!\n");
 		}
 		else {
-			System.out.println("  12   11   10   9    8    7   | BAR |   6    5    4    3    2    1 \n");
+			System.out.println("  12   11   10   9    8    7   | BAR |   6    5    4    3    2    1 \n\nStuck?, enter 'h' for hints!\n");
 		}
 	}
 	
@@ -98,7 +98,7 @@ public class Display {
 	}
 	
 	public void openingScreen(){
-		System.out.println("------WELCOME TO BACKGAMMON - LETS PLAY!--------");
+		System.out.println("\n-------------WELCOME TO BACKGAMMON - LETS PLAY!---------------\n");
 	}
 
 }
