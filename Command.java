@@ -2,7 +2,7 @@ package backgammon;
 
 public class Command {
 	
-	private enum CommandType {QUIT, ROLL, PIPCOUNT, HINT, INVALID, REPLAY};
+	private enum CommandType {QUIT, ROLL, PIPCOUNT, HINT, INVALID, REPLAY, DICE, TEST};
 	private CommandType commandType;
 	
 	Command(){
@@ -35,6 +35,14 @@ public class Command {
 			commandType = CommandType.REPLAY;
 		}
 		
+		if (inputFormatted.matches("DICE [1-6][1-6]")) {
+			commandType = CommandType.DICE;
+		}
+		
+		if (inputFormatted.matches("TEST .*")) {
+			commandType = CommandType.TEST;
+		}
+		
 	}
 	
 	
@@ -62,4 +70,11 @@ public class Command {
 		return commandType != CommandType.INVALID;
 	}
 	
+	public boolean isDice() {
+		return commandType == CommandType.DICE;
+	}
+	
+	public boolean isTest() {
+		return commandType == CommandType.TEST;
+	}
 }

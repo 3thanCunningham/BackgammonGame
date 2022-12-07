@@ -50,9 +50,15 @@ public class BackGammon {
 							game.endTurn(false);
 							
 							
-						} else if (command.isRoll()) {
+						} else if (command.isRoll() || command.isDice()) {
+							
+							if(command.isDice()) {
+							player[i].setRoll(Character.getNumericValue(input.charAt(5)) ,Character.getNumericValue(input.charAt(6)));
+							}
+							else {
 							player[i].setRoll(dice.roll(), dice.roll());
-
+							}
+							
 							System.out.print(player[i].getName() + " rolls : " + player[i].getRoll(0) + " " + player[i].getRoll(1) +" ");
 
 							if (player[i].isDouble()) { 
