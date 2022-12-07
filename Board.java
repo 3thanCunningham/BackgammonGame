@@ -27,7 +27,7 @@ public class Board {
 		
 		for(int i=0;i<5;i++) {
 			stacks.get(5).push(WhiteChecker);
-			stacks.get(0).push(WhiteChecker);
+			stacks.get(12).push(WhiteChecker);
 			
 			stacks.get(11).push(RedChecker);
 			stacks.get(18).push(RedChecker);
@@ -35,12 +35,12 @@ public class Board {
 		
 		for( int i=0;i<3;i++) {
 			stacks.get(16).push(RedChecker);
-			stacks.get(4).push(WhiteChecker);	
+			stacks.get(7).push(WhiteChecker);	
 		}
 		
 		for( int i=0;i<2;i++) {
-			stacks.get(1).push(WhiteChecker);
-			stacks.get(17).push(RedChecker);	
+			stacks.get(23).push(WhiteChecker);
+			stacks.get(0).push(RedChecker);	
 		}
 	}
 	
@@ -72,19 +72,21 @@ public class Board {
 	
 	public int getBear(int playerNo) {
 		int bear=0;
-		switch(playerNo) {
-		case 1: bear = playerOneBear;
-		case 2: bear = playerTwoBear;
+		if(playerNo==1) {
+		bear = playerOneBear;
+		}
+		if(playerNo==2) {
+		bear = playerTwoBear;
 		}
 		return bear;
 	}
 	
 	public void bearOff(CheckerColour colour) {
 		if(colour==CheckerColour.RED) {
-			playerOneBear++;
+			++playerOneBear;
 		}
 		else {
-			playerTwoBear++;
+			++playerTwoBear;
 		}
 	}
 	
