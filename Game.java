@@ -63,7 +63,7 @@ public class Game {
 			}
 			else {
 				if(!board.isStackEmpty(roll-1)) {
-					hint = "( "+ (roll) + " , BEAR-OFF )";
+					hint = "( "+ (25-roll) + " , BEAR-OFF )";
 					hintsString.add(hint);
 					hintsInteger.add(roll);
 					hintsInteger.add(roll);
@@ -158,12 +158,14 @@ public class Game {
 	public boolean isInputValid(String input) {
 		
 		boolean isInputValid = false;
-		String inputFormatted = input.trim().toUpperCase();
 		
+		if(!input.isEmpty()) {
+		String inputFormatted = input.trim().toUpperCase();
 		for(int i=0; i<letters.size();i++) {
 			if(inputFormatted.charAt(0)==letters.get(i).charAt(0)) {
 				isInputValid=true;
 			}
+		}
 		}
 		return isInputValid;
 	}
@@ -213,7 +215,7 @@ public class Game {
 	
 	public boolean isMovetoBar() {
 		boolean isMovetoBar=false;
-		if(!board.getStack(toPointTwo).isEmpty()) {
+		if(!board.getStack(toPointTwo).isEmpty() && fromPointOne<24) {
 		if((board.getStackColour(fromPointOne)!=board.getStackColour(toPointTwo))){
 			isMovetoBar = true;
 		}
