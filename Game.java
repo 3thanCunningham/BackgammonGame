@@ -227,8 +227,8 @@ public class Game {
 		board.addToBar(toPointTwo);
 	}
 	
-	public void endTurn() {
-		isTurnOver = true;
+	public void endTurn(Boolean turn) {
+		this.isTurnOver = turn;
 	}
 	
 	public boolean isTurnOver() {
