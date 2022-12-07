@@ -72,7 +72,6 @@ public class BackGammon {
 									do {
 									input = display.getCommand(player[i]);
 									command.setCommand(input);
-									System.out.println(input);
 									if(game.isInputValid(input)) {
 										game.getMove(input);
 										if(game.isMovetoBar()) {
