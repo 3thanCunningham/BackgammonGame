@@ -10,7 +10,7 @@ public class Player {
 	
 	Player (String name){
 		this.name = name;
-		pipCount = 167;
+		pipCount = 0;
 		roll = new int[2];
 		colour = CheckerColour.RED;
 		pipNumbers = BoardType.CLOCKWISE;
@@ -49,7 +49,37 @@ public class Player {
 		this.pipCount = pipCount;
 	}
 	
-	public int getPipCount() {
+	public int getPipCount(Board board, Player player) {
+		pipCount = 0;
+		
+		if(player.getBoardType() == BoardType.CLOCKWISE) {
+		for(int i=0; i<= 23; ++i) {
+			
+			if( board.StackIndexEmpty(i,0) == true)
+	    	{
+	    		pipCount += 0;
+	    	}
+			
+			else if(board.getStack(i).get(0).getColour()== CheckerColour.RED) {
+				pipCount += board.getStackSize(i) * (24-i);
+			}
+		}
+		}
+		
+		else {
+			for(int j=0; j<= 23; ++j) {
+				
+				if( board.StackIndexEmpty(j,0) == true)
+		    	{
+		    		pipCount += 0;
+		    	}
+				
+				else if(board.getStack(j).get(0).getColour()== CheckerColour.WHITE) {
+					pipCount += board.getStackSize(j) * (j+1);
+				}
+			}
+		}
+		
 		return pipCount;
 	}
 	
