@@ -44,7 +44,7 @@ public class Game {
 			}
 			else {
 				if(board.getStack(24-roll).isEmpty() || board.getStackColour(24-roll)==playerColour) {
-					hint = "(  BAR , " + (25-roll) + " )";
+					hint = "(  BAR , " + (roll) + " )";
 					hintsString.add(hint);
 					hintsInteger.add(26);
 					hintsInteger.add(25-roll);
