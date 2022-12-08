@@ -180,5 +180,27 @@ public class Board {
 		
 		return isHomeBoardFull;
 	}
+	
+	/*public Player isGameWinner(Player player[], Board board) {
+		if(board.getBear(playerOneBear)>board.getBear(playerTwoBear)) {
+		return player[0];
+		}
+		else
+		return player[1];
+	}
+	
+	public void announceGameWinner(Player player[], Board board) {
+		if(board.getBear(playerOneBear)>board.getBear(playerTwoBear)) {
+			System.out.print("\n" + player[0].getName() + " Won this Game! Get ready for the next one!\n");
+		}
+		else if(board.getBear(playerTwoBear)>board.getBear(playerOneBear)) {
+			System.out.print("\n" +player[1].getName() + " Won this Game! Get ready for the next one!\n");
+		}
+		
+		else 
+			System.out.print("\nBoth players are tied this Game! Get ready for the next one!\n");
+		
+	}*/
+	
 }
 
