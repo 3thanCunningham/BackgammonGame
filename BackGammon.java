@@ -31,10 +31,26 @@ public class BackGammon {
 					display.displayBoard(board, player[i]);
 					
 					do {
-
+						input="";
+						if(!display.isFileOpen()) {
 						input = display.getCommand(player[i]);
 						command.setCommand(input);
-
+						
+						if(command.isTest()) {
+							display.openFile(input.substring(5));
+							input = display.getCommandFromFile();
+							command.setCommand(input);
+						}
+						}
+						else if(display.hasNextLine()) {
+							input = display.getCommandFromFile();
+							command.setCommand(input);
+						}
+						else {
+							display.closeFile();
+						}
+						
+						
 						if (command.isQuit()) {
 							break;
 						} else if (!command.isValid()) {
