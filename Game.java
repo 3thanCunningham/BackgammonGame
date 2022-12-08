@@ -154,7 +154,7 @@ public class Game {
 			else {
 				for(int i=5;i>=0;i--) {
 					if(!board.isStackEmpty(i)) {
-						hint = "( "+ (25-i) + " , BEAR-OFF )";
+						hint = "( "+ (24-i) + " , BEAR-OFF )";
 						hintsString.add(hint);
 						hintsInteger.add(i+1);
 						hintsInteger.add(i+1);
