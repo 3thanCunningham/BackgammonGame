@@ -12,6 +12,7 @@ public class Game {
 	private CheckerColour playerColour;
 	private int fromPointOne, toPointTwo;
 	private boolean isTurnOver;
+	private int matchLength;
 
 	Game(){
 		isTurnOver=false;
@@ -28,6 +29,7 @@ public class Game {
 		fromPointOne=0;
 		toPointTwo=0;
 		isTurnOver = false;
+		matchLength = 0;
 	}
 	
 	public void findHints(int roll) {
@@ -135,30 +137,6 @@ public class Game {
 			}
 				
 			}
-		if(board.isHomeBoardFull(playerColour) && hintsString.isEmpty()) {
-			if(boardType==BoardType.CLOCKWISE) {
-				for(int i=18;i<NUMBER_OF_POINTS;i++) {
-					if(!board.isStackEmpty(i)) {
-						hint = "( "+ (i+1) + " , BEAR-OFF )";
-						hintsString.add(hint);
-						hintsInteger.add(i+1);
-						hintsInteger.add(i+1);
-						break;
-					}
-				}
-			}
-			else {
-				for(int i=5;i>=0;i--) {
-					if(!board.isStackEmpty(i)) {
-						hint = "( "+ (25-i) + " , BEAR-OFF )";
-						hintsString.add(hint);
-						hintsInteger.add(i+1);
-						hintsInteger.add(i+1);
-						break;
-					}
-				}
-			}
-		}
 		}
 	}
 	
@@ -166,7 +144,7 @@ public class Game {
 	
 	public void giveHints() {
 		
-		System.out.println("Possible Moves: ");
+		System.out.println("\nPossible Moves: ");
 		char letter = 'A';
 		for ( String hint : hintsString ) {
 		    System.out.println( letter + " - " + hint );
@@ -262,5 +240,13 @@ public class Game {
 	public void BearOff() {
 		board.getStack(fromPointOne).pop();
 		board.bearOff(playerColour);
+	}
+	
+	public void setMatchLength(int matchLength) {
+		this.matchLength = matchLength;
+	}
+	
+	public int getMatchLength() {
+		return matchLength;
 	}
 }
