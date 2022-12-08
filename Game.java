@@ -135,6 +135,30 @@ public class Game {
 			}
 				
 			}
+		if(board.isHomeBoardFull(playerColour) && hintsString.isEmpty()) {
+			if(boardType==BoardType.CLOCKWISE) {
+				for(int i=18;i<NUMBER_OF_POINTS;i++) {
+					if(!board.isStackEmpty(i)) {
+						hint = "( "+ (i+1) + " , BEAR-OFF )";
+						hintsString.add(hint);
+						hintsInteger.add(i+1);
+						hintsInteger.add(i+1);
+						break;
+					}
+				}
+			}
+			else {
+				for(int i=5;i>=0;i--) {
+					if(!board.isStackEmpty(i)) {
+						hint = "( "+ (25-i) + " , BEAR-OFF )";
+						hintsString.add(hint);
+						hintsInteger.add(i+1);
+						hintsInteger.add(i+1);
+						break;
+					}
+				}
+			}
+		}
 		}
 	}
 	
