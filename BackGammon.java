@@ -36,14 +36,13 @@ public class BackGammon {
 					if(board.isGameOver()) {
 						break;
 					}
-					if(player[0].getScore()==matchLength) {
+					if(player[0].getScore()>=matchLength) {
 						break;
 					}
-					else if(player[1].getScore()==matchLength) {
+					else if(player[1].getScore()>=matchLength) {
 						break;
 					}
 					
-					/*System.out.print("\n  Match Length: " + matchLength);*/
 					display.displayBoard(board, player[i], matchLength);
 					
 					do {
@@ -133,7 +132,7 @@ public class BackGammon {
 											int rollLeft = player[i].getRoll(1); 
 											player[i].setRoll(rollLeft, rollLeft);
 										}
-										/*System.out.print("\n  Match length: " + matchLength);*/
+
 										display.displayBoard(board, player[i], matchLength);
 										} 
 									else {
@@ -170,7 +169,7 @@ public class BackGammon {
 					System.out.print("\n" +player[1].getName() + " Won this Game! Get ready for the next one!\n");
 				}
 				
-				System.out.println(player[0].getName() + " New Score: " + player[0].getScore());
+				System.out.println("\n"+player[0].getName() + " New Score: " + player[0].getScore());
 				System.out.println(player[1].getName() + " New Score: " + player[1].getScore());
 				board = new Board();
 				player = dice.goesFirst(names[0], names[1]);
@@ -180,7 +179,7 @@ public class BackGammon {
 				player[1].setColour(CheckerColour.WHITE);
 			}
 
-			while (!command.isQuit()&& player[0].getScore()!= matchLength && player[1].getScore() != matchLength);
+			while (!command.isQuit()&& !(player[0].getScore()>= matchLength) && !(player[1].getScore() >= matchLength));
 			
 			System.out.println("\nMATCH OVER!\n");
 			names[2] = player[0].isMatchWinner(player);
