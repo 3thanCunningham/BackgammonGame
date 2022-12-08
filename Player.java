@@ -7,6 +7,7 @@ public class Player {
 	private CheckerColour colour;
 	private int roll[];
 	private int pipCount;
+	private int score;
 	
 	Player (String name){
 		this.name = name;
@@ -14,6 +15,7 @@ public class Player {
 		roll = new int[2];
 		colour = CheckerColour.RED;
 		pipNumbers = BoardType.CLOCKWISE;
+		score = 0;
 	}
 	
 	public String getName() {
@@ -90,5 +92,41 @@ public class Player {
 		}
 		return isDouble;
 	}
+	
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void upScore() {
+		score++;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+	
+	public Player isMatchWinner(Player player[]) {
+		if(player[0].getScore() > player[1].getScore()) {
+			return player[0];
+		}
+		
+		else
+			return player[1];
+	}
+	
+	public void announceMatchWinner(Player player[]) {
+		if(player[0].getScore() > player[1].getScore()) {
+			System.out.println(player[0].getName() + " Won the Match! Congratulations!");
+		}
+		
+		else if(player[1].getScore() > player[0].getScore()) {
+			System.out.println(player[1].getName() + " Won the Match! Congratulations!");
+		}
+		
+		else
+			System.out.println("The Match is Tied! No winner decided!");
+	}
+	
+	
 }
 	
