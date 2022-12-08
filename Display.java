@@ -1,20 +1,15 @@
 package backgammon;
 
 import java.util.*;
-import java.io.File;  // Import the File class
 
 public class Display {
 	
 	Scanner in;
-	Scanner sc;
-	File file;
-	boolean fileIsOpen;
-	
+	Scanner in2;
+
 	Display (){
 		in = new Scanner(System.in);
-		fileIsOpen=false;
 	}
-	
 	
 	public String getName() {
 		System.out.print("Enter your name: ");
@@ -22,17 +17,32 @@ public class Display {
 		return name;
 	}
 	
-	public void displayBoard(Board board, Player player) {
+	public int getMatchLength(Game game) {
+		in2 = new Scanner(System.in);
+		int matchLength;
+			do {
+			System.out.print("\nEnter match length (odd): ");	
+			matchLength = in2.nextInt();
+			game.setMatchLength(matchLength);
+			} while (game.getMatchLength()%2 ==0);
+			
+			return matchLength;
 		
+	}
+	
+	public void displayBoard(Board board, Player player, int matchLength) {
+		System.out.println("\n  -----------------------------------------------------------------");
 		if(player.getBoardType() == BoardType.ANTICLOCKWISE) {
-		System.out.print("\n  12   11   10   9    8    7   | BAR |  6    5    4    3    2    1 ");
-		System.out.println("	" + player.getName() + "'s Checkers Beared Off: " + board.getBear(2));
+		System.out.println("  Match Length: " + matchLength + "      " + player.getName()+"'s score: " + player.getScore() + "      " + player.getName() + "'s Bear-Off: " + board.getBear(2));
+		System.out.println("  -----------------------------------------------------------------");
+		System.out.print("  12   11   10   9    8    7   | BAR |  6    5    4    3    2    1 ");
 		}
 		else {
-		System.out.print("\n  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 ");
-		System.out.println("	" + player.getName() + "'s Checkers Beared Off: " + board.getBear(1));
-		}
+		System.out.println("  Match Length: " + matchLength +"      " + player.getName()+"'s score: " + player.getScore() + "      " + player.getName() + "'s Bear-Off: " + board.getBear(1));
 		System.out.println("  -----------------------------------------------------------------");
+		System.out.print("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 ");
+		}
+		System.out.println("\n  -----------------------------------------------------------------");
 		int MaxSize = board.maxStackSize();
 		
 		for(int m = 0; m < MaxSize ; ++m) {
@@ -88,16 +98,17 @@ public class Display {
 		}
 		System.out.println("  -----------------------------------------------------------------");
 		if(player.getBoardType() == BoardType.ANTICLOCKWISE) {
-		System.out.println("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 \n\nStuck?, enter 'h' for hints!\n");
+		System.out.println("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 ");
 		}
 		else {
-			System.out.println("  12   11   10   9    8    7   | BAR |   6    5    4    3    2    1 \n\nStuck?, enter 'h' for hints!\n");
+			System.out.println("  12   11   10   9    8    7   | BAR |   6    5    4    3    2    1 ");
 		}
+		System.out.println("  -----------------------------------------------------------------\n  Stuck?, enter 'h' for hints!\n");
 	}
 	
 	
 	public String getCommand(Player player) {
-		System.out.print(player.getName() + " enter command: ");
+		System.out.print("\n" + player.getName() + " enter command: ");
 		String input = in.nextLine();
 		return input;
 	}
@@ -105,46 +116,7 @@ public class Display {
 	public void openingScreen(){
 		System.out.println("\n-------------WELCOME TO BACKGAMMON - LETS PLAY!---------------\n");
 	}
-	
-	
-	public void openFile(String filename) {
-		try  
-		{  
-		file = new File(filename);   
-		sc = new Scanner(file);     //file to be scanned   
-		fileIsOpen=true;
-		}  
-		catch(Exception e)  
-		{  
-		e.printStackTrace();  
-		}  
-	}
-	
-	public String getCommandFromFile() {
-		String input = sc.nextLine();
-		if(input.isBlank()) {
-			fileIsOpen=false;
-		}
-		return input;
-	}
-	
-	public boolean hasNextLine() {
-		boolean retVal = false;
-		if(fileIsOpen) {
-			retVal = sc.hasNextLine();
-		}
-		
-	return retVal;
-	}
-	
-	public boolean isFileOpen() {
-		return fileIsOpen;
-	}
-	
-	public void closeFile() {
-		fileIsOpen=false;
-	}
-}
 
+}
 
 
