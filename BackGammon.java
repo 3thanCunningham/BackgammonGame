@@ -4,23 +4,20 @@ public class BackGammon {
 	public static final int NUMBER_OF_PLAYERS = 2;
 
 	public static void main(String[] args) {
+
 		
-		Command command = new Command();
-		
-		do {
-		Player[] names = new Player[3];
+		Player[] names = new Player[2];
 		Display display = new Display();
 		display.openingScreen();
 		Dice dice = new Dice();
 		names[0] = new Player(display.getName());
 		names[1] = new Player(display.getName());
-		
+
 		String input;
-		
+		Command command = new Command();
 		Game game = new Game();
 		
-		int matchLength = display.getMatchLength(game);
-				
+		do {
 			Board board = new Board();
 			Player[] player = dice.goesFirst(names[0], names[1]);
 			player[0].setBoard(BoardType.CLOCKWISE);
@@ -29,40 +26,43 @@ public class BackGammon {
 			player[1].setColour(CheckerColour.WHITE);
 
 			do {
-				do {
-					
 				for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
-					
-					if(board.isGameOver()) {
-						break;
-					}
-					if(player[0].getScore()==matchLength) {
-						break;
-					}
-					else if(player[1].getScore()==matchLength) {
-						break;
-					}
-					
-					/*System.out.print("\n  Match Length: " + matchLength);*/
-					display.displayBoard(board, player[i], matchLength);
+
+					display.displayBoard(board, player[i]);
 					
 					do {
-
+						input="";
+						if(!display.isFileOpen()) {
 						input = display.getCommand(player[i]);
 						command.setCommand(input);
-
+						
+						if(command.isTest()) {
+							display.openFile(input.substring(5));
+							input = display.getCommandFromFile();
+							command.setCommand(input);
+						}
+						}
+						else if(display.hasNextLine()) {
+							input = display.getCommandFromFile();
+							command.setCommand(input);
+						}
+						else {
+							display.closeFile();
+						}
+						
+						
 						if (command.isQuit()) {
 							break;
 						} else if (!command.isValid()) {
-							System.out.println("\nInvalid Syntax - Try Again");
+							System.out.println("\nInvalid Syntax - Try Again\n");
 							game.endTurn(false);
 							
 						} else if (command.isHint()) {
-							System.out.println("\nEnter 'r' to roll\nEnter 'p' for your pip count\nEnter 'q' to quit");
+							System.out.println("\nEnter 'r' to roll\nEnter 'p' for your pip count\nEnter 'q' to quit\n");
 							game.endTurn(false);
 							
 						} else if (command.isPipCount()) {
-							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].getPipCount(board,player[i]));
+							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].getPipCount(board,player[i]) + "\n");
 							game.endTurn(false);
 							
 							
@@ -75,10 +75,10 @@ public class BackGammon {
 							player[i].setRoll(dice.roll(), dice.roll());
 							}
 							
-							System.out.print("\n" + player[i].getName() + " rolls : " + player[i].getRoll(0) + " " + player[i].getRoll(1));
+							System.out.print(player[i].getName() + " rolls : " + player[i].getRoll(0) + " " + player[i].getRoll(1) +" ");
 
 							if (player[i].isDouble()) { 
-								System.out.print(" " + player[i].getRoll(0) + " " + player[i].getRoll(0));
+								System.out.print(player[i].getRoll(0) + " " + player[i].getRoll(0) + "\n");
 							}
 							 
 							System.out.println();
@@ -88,6 +88,7 @@ public class BackGammon {
 							if (player[i].isDouble()){ 
 								moves = 4; 
 							}
+							
 							
 							do {
 							game = new Game(board, player[i].getBoardType(), player[i].getColour());
@@ -116,11 +117,10 @@ public class BackGammon {
 											int rollLeft = player[i].getRoll(1); 
 											player[i].setRoll(rollLeft, rollLeft);
 										}
-										/*System.out.print("\n  Match length: " + matchLength);*/
-										display.displayBoard(board, player[i], matchLength);
+										display.displayBoard(board, player[i]);
 										} 
 									else {
-										System.out.println("\nInvalid input - try again");
+										System.out.println("\nInvalid input - try again\n");
 										} 
 									} 
 									while(!isMoveDone);
@@ -134,46 +134,22 @@ public class BackGammon {
 							game.endTurn(true);
 							}
 						 else {
-							System.out.println("\nInvalid Command");
+							System.out.println("\nInvalid Command\n");
 						}
 					} while (!game.isTurnOver());
 				}
-				} while(!command.isQuit()&&!board.isGameOver());
-				
-				if (command.isQuit()) {
-					break;
-				}
-				
-				if(board.getBear(1)>board.getBear(2)) {
-					player[0].upScore();
-					System.out.print("\n" + player[0].getName() + " Won this Game! Get ready for the next one!\n");
-					}
-				else if (board.getBear(2)>board.getBear(1)){
-					player[1].upScore();
-					System.out.print("\n" +player[1].getName() + " Won this Game! Get ready for the next one!\n");
-				}
-				
-				System.out.println(player[0].getName() + " New Score: " + player[0].getScore());
-				System.out.println(player[1].getName() + " New Score: " + player[1].getScore());
-				board = new Board();
-				player = dice.goesFirst(names[0], names[1]);
-				player[0].setBoard(BoardType.CLOCKWISE);
-				player[1].setBoard(BoardType.ANTICLOCKWISE);
-				player[0].setColour(CheckerColour.RED);
-				player[1].setColour(CheckerColour.WHITE);
 			}
 
-			while (!command.isQuit()&& player[0].getScore()!= matchLength && player[1].getScore() != matchLength);
-			
-			System.out.println("\nMATCH OVER!\n");
-			names[2] = player[0].isMatchWinner(player);
-			names[2].announceMatchWinner(player);
-			System.out.println("\nWould you like to play a New Match? (y/n): ");
-			input = display.getCommand(names[2]);
+			while (!command.isQuit() && !board.isGameOver());
+
+			System.out.println("\nGAME OVER!\n");
+			System.out.println("PLAYER 1. You decide. Would you like to play again? (y/n): ");
+			input = display.getCommand(player[0]);
 			command.setCommand(input);
+
 		}
 		while (command.isReplay());
 		System.out.println("\nThanks for playing! Goodbye.\n");
-	
+
 }
 }
