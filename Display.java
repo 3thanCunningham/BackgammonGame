@@ -1,14 +1,19 @@
 package backgammon;
 
 import java.util.*;
+import java.io.File;  // Import the File class
 
 public class Display {
 	
 	Scanner in;
 	Scanner in2;
+	Scanner sc;
+	File file;
+	boolean fileIsOpen;
 
 	Display (){
 		in = new Scanner(System.in);
+		fileIsOpen = false;
 	}
 	
 	public String getName() {
@@ -116,7 +121,46 @@ public class Display {
 	public void openingScreen(){
 		System.out.println("\n-------------WELCOME TO BACKGAMMON - LETS PLAY!---------------\n");
 	}
-
+	
+	public void openFile(String filename) {
+		try  
+		{  
+		file = new File(filename);   
+		sc = new Scanner(file);     //file to be scanned   
+		fileIsOpen=true;
+		}  
+		catch(Exception e)  
+		{  
+		e.printStackTrace();  
+		}  
+	}
+	
+	public String getCommandFromFile() {
+		String input = sc.nextLine();
+		if(input.isBlank()) {
+			fileIsOpen=false;
+		}
+		return input;
+	}
+	
+	public boolean hasNextLine() {
+		boolean retVal = false;
+		if(fileIsOpen) {
+			retVal = sc.hasNextLine();
+		}
+		
+	return retVal;
+	}
+	
+	public boolean isFileOpen() {
+		return fileIsOpen;
+	}
+	
+	public void closeFile() {
+		fileIsOpen=false;
+	}
 }
+
+
 
 
