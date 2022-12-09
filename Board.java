@@ -9,10 +9,12 @@ public class Board {
 	private int playerOneBear, playerTwoBear;
 	private Checker WhiteChecker;
 	private Checker RedChecker;
+	private int doubleCube;
 	
 	Board(){
 		playerOneBear =0;
 		playerTwoBear =0;
+		doubleCube = 1;
 		
 		WhiteChecker = new Checker(CheckerColour.WHITE);
 		RedChecker = new Checker(CheckerColour.RED);
@@ -181,26 +183,26 @@ public class Board {
 		return isHomeBoardFull;
 	}
 	
-	/*public Player isGameWinner(Player player[], Board board) {
-		if(board.getBear(playerOneBear)>board.getBear(playerTwoBear)) {
-		return player[0];
-		}
-		else
-		return player[1];
+	public void doubleCube() {
+		this.doubleCube = 2*doubleCube;
 	}
 	
-	public void announceGameWinner(Player player[], Board board) {
-		if(board.getBear(playerOneBear)>board.getBear(playerTwoBear)) {
-			System.out.print("\n" + player[0].getName() + " Won this Game! Get ready for the next one!\n");
+	public void setDoubleCube(int num) {
+		this.doubleCube = num;
+	}
+	
+	public int getDoubleCube() {
+		return doubleCube;
+	}
+	
+	public void winGame(int num) {
+		if(num==0) {
+			playerOneBear = 15;
 		}
-		else if(board.getBear(playerTwoBear)>board.getBear(playerOneBear)) {
-			System.out.print("\n" +player[1].getName() + " Won this Game! Get ready for the next one!\n");
-		}
+		else
+			playerTwoBear = 15;
 		
-		else 
-			System.out.print("\nBoth players are tied this Game! Get ready for the next one!\n");
-		
-	}*/
+	}
 	
 }
 
