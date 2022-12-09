@@ -43,7 +43,7 @@ public class BackGammon {
 						break;
 					}
 					
-					display.displayBoard(board, player[i], matchLength);
+					display.displayBoard(board, player, matchLength, i);
 					
 					do {
 						
@@ -74,12 +74,45 @@ public class BackGammon {
 							game.endTurn(false);
 							
 						} else if (command.isHint()) {
-							System.out.println("\nEnter 'r' to roll\nEnter 'p' for your pip count\nEnter 'q' to quit");
+							System.out.println("\nEnter 'r' to roll\nEnter 'p' for your pip count\nEnter 'q' to quit\nEnter 'double' to double the stakes!");
 							game.endTurn(false);
 							
 						} else if (command.isPipCount()) {
 							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].getPipCount(board,player[i]));
 							game.endTurn(false);
+							
+						} else if (command.isDoubleCube()) {
+							
+							if ((player[i].hasCube()==false && player[(i+1)%2].hasCube()==false) ||
+								(player[i].hasCube()==true && player[(i+1)%2].hasCube()==false)){
+							System.out.println("\n" + player[i].getName()+ " is offering a double, " + player[(i+1)%2].getName() + " Do you accept? (accept/refuse):");
+							do {
+							input = display.getCommand(player[(i+1)%2]);
+							command.setCommand(input);
+							if(!command.isValid()) {
+								System.out.println("\nInvalid Response - Please enter accept/refuse:");
+							}
+							}while(!command.isValid());
+							
+							if(command.isAccept()) {
+								board.doubleCube();
+								player[i].takeCube();
+								player[(i+1)%2].giveCube();
+							}
+							
+							if(command.isRefuse()) {
+								board.winGame(i);
+								break;
+							}
+							
+							game.endTurn(false);
+							}
+							
+							else {
+								System.out.println("\nYou don't have the cube, you can't double!");
+								game.endTurn(false);
+							}
+							
 							
 							
 						} else if (command.isRoll() || command.isDice()) {
@@ -133,7 +166,7 @@ public class BackGammon {
 											player[i].setRoll(rollLeft, rollLeft);
 										}
 
-										display.displayBoard(board, player[i], matchLength);
+										display.displayBoard(board, player, matchLength, i);
 										} 
 									else {
 										System.out.println("\nInvalid input - try again");
@@ -153,7 +186,7 @@ public class BackGammon {
 							System.out.println("\nInvalid Command");
 						}
 					} while (!game.isTurnOver());
-				}
+				} 
 				} while(!command.isQuit()&&!board.isGameOver());
 				
 				if (command.isQuit()) {
@@ -162,11 +195,19 @@ public class BackGammon {
 				
 				if(board.getBear(1)>board.getBear(2)) {
 					player[0].upScore();
+					int doubler = (player[0].getScore())*(board.getDoubleCube());
+					player[0].setScore(doubler);
 					System.out.print("\n" + player[0].getName() + " Won this Game! Get ready for the next one!\n");
 					}
 				else if (board.getBear(2)>board.getBear(1)){
 					player[1].upScore();
+					int doubler = (player[1].getScore())*(board.getDoubleCube());
+					player[1].setScore(doubler);
 					System.out.print("\n" +player[1].getName() + " Won this Game! Get ready for the next one!\n");
+				}
+				
+				if((player[0].getScore()>= matchLength || player[1].getScore()>= matchLength)) {
+					break;
 				}
 				
 				System.out.println("\n"+player[0].getName() + " New Score: " + player[0].getScore());
@@ -177,6 +218,8 @@ public class BackGammon {
 				player[1].setBoard(BoardType.ANTICLOCKWISE);
 				player[0].setColour(CheckerColour.RED);
 				player[1].setColour(CheckerColour.WHITE);
+				player[0].takeCube();
+				player[1].takeCube();
 			}
 
 			while (!command.isQuit()&& !(player[0].getScore()>= matchLength) && !(player[1].getScore() >= matchLength));
