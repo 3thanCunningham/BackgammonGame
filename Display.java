@@ -35,15 +35,27 @@ public class Display {
 		
 	}
 	
-	public void displayBoard(Board board, Player player, int matchLength) {
+	public void displayBoard(Board board, Player player[], int matchLength, int x) {
+		
 		System.out.println("\n  -----------------------------------------------------------------");
-		if(player.getBoardType() == BoardType.ANTICLOCKWISE) {
-		System.out.println("  Match Length: " + matchLength + "      " + player.getName()+"'s score: " + player.getScore() + "      " + player.getName() + "'s Bear-Off: " + board.getBear(2));
+		if(player[x].getBoardType() == BoardType.ANTICLOCKWISE && !player[x].hasCube()) {
+		System.out.println("  Match Length: " + matchLength + "      " + player[x].getName()+"'s score: " + player[x].getScore() + "      " + player[x].getName() + "'s Bear-Off: " + board.getBear(2));
 		System.out.println("  -----------------------------------------------------------------");
 		System.out.print("  12   11   10   9    8    7   | BAR |  6    5    4    3    2    1 ");
 		}
+		else if(player[x].getBoardType() == BoardType.ANTICLOCKWISE && player[x].hasCube()){
+		System.out.println("  Match Length: " + matchLength + "      " + player[x].getName()+"'s score: " + player[x].getScore() + "      " + player[x].getName() + "'s Bear-Off: " + board.getBear(2));
+		System.out.println("  -----------------------------------------------------------------");
+		System.out.print("  12   11   10   9    8    7   | BAR |  6    5    4    3    2    1    " + player[x].getName() + "'s Double cube: " + board.getDoubleCube());
+		}
+		
+		else if(player[x].getBoardType() == BoardType.CLOCKWISE && player[x].hasCube()) {
+		System.out.println("  Match Length: " + matchLength +"      " + player[x].getName()+"'s score: " + player[x].getScore() + "      " + player[x].getName() + "'s Bear-Off: " + board.getBear(1));
+		System.out.println("  -----------------------------------------------------------------");
+		System.out.print("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24   " + player[x].getName() + "'s Double cube: " + board.getDoubleCube());
+		}
 		else {
-		System.out.println("  Match Length: " + matchLength +"      " + player.getName()+"'s score: " + player.getScore() + "      " + player.getName() + "'s Bear-Off: " + board.getBear(1));
+		System.out.println("  Match Length: " + matchLength +"      " + player[x].getName()+"'s score: " + player[x].getScore() + "      " + player[x].getName() + "'s Bear-Off: " + board.getBear(1));
 		System.out.println("  -----------------------------------------------------------------");
 		System.out.print("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 ");
 		}
@@ -72,12 +84,20 @@ public class Display {
 			System.out.println();
 		}
 		
-		if(board.hasCheckerOnBar()) {
+		
+		if(board.hasCheckerOnBar() && !player[x].hasCube() && !player[(x+1)%2].hasCube()) {
+			System.out.println("                                " + board.getBar().toString() + "                                  Double cube: 64");
+		}
+		else if(board.hasCheckerOnBar()) {
 			System.out.println("                                " + board.getBar().toString());
 		}
-		else {
-		System.out.println();
+		else if( !player[x].hasCube() && !player[(x+1)%2].hasCube()) {
+		System.out.println("                                                                      Double cube: 64");
 		}
+		else if(player[x].hasCube() || player[(x+1)%2].hasCube()) {
+			System.out.println();
+		}
+		
 		
 		for(int i=MaxSize-1;  i>=0 ; --i) {
 			for(int j = 11; j >= 0; --j) {
@@ -102,8 +122,15 @@ public class Display {
 			System.out.println();
 		}
 		System.out.println("  -----------------------------------------------------------------");
-		if(player.getBoardType() == BoardType.ANTICLOCKWISE) {
+		
+		if(player[x].getBoardType() == BoardType.ANTICLOCKWISE && player[(x+1)%2].hasCube()) {
+		System.out.println("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24   " + player[(x+1)%2].getName() + "'s Double cube: " + board.getDoubleCube());
+		}
+		else if(player[x].getBoardType() == BoardType.ANTICLOCKWISE) {
 		System.out.println("  13   14   15   16   17   18  | BAR |  19   20   21   22   23   24 ");
+		}
+		else if (player[x].getBoardType() == BoardType.CLOCKWISE && player[(x+1)%2].hasCube()) {
+			System.out.println("  12   11   10   9    8    7   | BAR |   6    5    4    3    2    1   " + player[(x+1)%2].getName() + "'s Double cube: " + board.getDoubleCube());
 		}
 		else {
 			System.out.println("  12   11   10   9    8    7   | BAR |   6    5    4    3    2    1 ");
