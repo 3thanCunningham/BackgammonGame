@@ -8,6 +8,7 @@ public class Player {
 	private int roll[];
 	private int pipCount;
 	private int score;
+	private boolean hasCube;
 	
 	Player (String name){
 		this.name = name;
@@ -16,6 +17,7 @@ public class Player {
 		colour = CheckerColour.RED;
 		pipNumbers = BoardType.CLOCKWISE;
 		score = 0;
+		hasCube = false;
 	}
 	
 	public String getName() {
@@ -125,6 +127,18 @@ public class Player {
 		
 		else
 			System.out.println("The Match is Tied! No winner decided!");
+	}
+	
+	public void giveCube() {
+		hasCube = true;
+	}
+	
+	public void takeCube() {
+		hasCube = false;
+	}
+	
+	public boolean hasCube() {
+		return hasCube;
 	}
 	
 	
