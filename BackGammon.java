@@ -14,6 +14,7 @@ public class BackGammon {
 		Dice dice = new Dice();
 		names[0] = new Player(display.getName());
 		names[1] = new Player(display.getName());
+		Score score = new Score();
 		
 		String input;
 		
@@ -194,16 +195,18 @@ public class BackGammon {
 				}
 				
 				if(board.getBear(1)>board.getBear(2)) {
-					player[0].upScore();
-					int doubler = (player[0].getScore())*(board.getDoubleCube());
+					score.setScore(board.getScoreType(game.isCheckerOnHomeBoard(player[0].getBoardType())));
+					int doubler = score.getScore(score.getScoreType(), board.getDoubleCube());
 					player[0].setScore(doubler);
-					System.out.print("\n" + player[0].getName() + " Won this Game! Get ready for the next one!\n");
+					display.announceScore(score, player[0].getName(), player[0].getScore());
+					
+					
 					}
 				else if (board.getBear(2)>board.getBear(1)){
-					player[1].upScore();
-					int doubler = (player[1].getScore())*(board.getDoubleCube());
+					score.setScore(board.getScoreType(game.isCheckerOnHomeBoard(player[1].getBoardType())));
+					int doubler = score.getScore(score.getScoreType(), board.getDoubleCube());
 					player[1].setScore(doubler);
-					System.out.print("\n" +player[1].getName() + " Won this Game! Get ready for the next one!\n");
+					display.announceScore(score, player[1].getName(), player[1].getScore());
 				}
 				
 				if((player[0].getScore()>= matchLength || player[1].getScore()>= matchLength)) {
