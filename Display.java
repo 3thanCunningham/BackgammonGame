@@ -186,6 +186,21 @@ public class Display {
 	public void closeFile() {
 		fileIsOpen=false;
 	}
+	
+	public void giveCommandHints() {
+		System.out.println("\nEnter 'r' to roll");
+		System.out.println("Enter 'p' for your pip count");
+		System.out.println("Enter 'q' to quit");
+		System.out.println("Enter 'dice <int><int>' to set dice roll to given numbers");
+		System.out.println("Enter 'test <filename>' to perform commands in a given text file");
+		System.out.println("Enter 'double' to offer a double to the other player");
+		System.out.println();
+	}
+	
+	public void announceScore(Score score, String name, int points) {
+		System.out.println("\n" + name + " won this Game with a " + score.toString() + " and a score of: " + points + "! Get ready for the next one!\n");
+	}
+
 }
 
 
