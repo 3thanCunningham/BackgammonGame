@@ -56,7 +56,7 @@ public class Game {
 		else {
 		if(board.isHomeBoardFull(playerColour)) {
 			if(boardType==BoardType.CLOCKWISE) {
-				if(!board.isStackEmpty(24-roll)) {
+				if((!board.isStackEmpty(24-roll)) && (board.getStackColour(24-roll)==playerColour)) {
 					hint = "( "+ (25-roll) + " , BEAR-OFF )";
 					hintsString.add(hint);
 					hintsInteger.add(25-roll);
@@ -64,7 +64,7 @@ public class Game {
 				}
 			}
 			else {
-				if(!board.isStackEmpty(roll-1)) {
+				if((!board.isStackEmpty(roll-1)) && (board.getStackColour(roll-1)==playerColour)) {
 					hint = "( "+ (25-roll) + " , BEAR-OFF )";
 					hintsString.add(hint);
 					hintsInteger.add(roll);
@@ -142,7 +142,7 @@ public class Game {
 		if(board.isHomeBoardFull(playerColour) && hintsString.isEmpty()) {
 			if(boardType==BoardType.CLOCKWISE) {
 				for(int i=18;i<NUMBER_OF_POINTS;i++) {
-					if(!board.isStackEmpty(i)) {
+					if((!board.isStackEmpty(i)) && (board.getStackColour(i)==playerColour)) {
 						hint = "( "+ (i+1) + " , BEAR-OFF )";
 						hintsString.add(hint);
 						hintsInteger.add(i+1);
@@ -153,7 +153,7 @@ public class Game {
 			}
 			else {
 				for(int i=5;i>=0;i--) {
-					if(!board.isStackEmpty(i)) {
+					if((!board.isStackEmpty(i)) && (board.getStackColour(i)==playerColour)) {
 						hint = "( "+ (24-i) + " , BEAR-OFF )";
 						hintsString.add(hint);
 						hintsInteger.add(i+1);
@@ -274,4 +274,26 @@ public class Game {
 	public int getMatchLength() {
 		return matchLength;
 	}
+	
+public boolean isCheckerOnHomeBoard(BoardType boardType) {
+	
+	boolean checkerOnHomeBoard = false;
+	
+	if(boardType==BoardType.CLOCKWISE) {
+		for(int i=18;i<24;i++) {
+			if(!board.getStack(i).isEmpty()){
+				checkerOnHomeBoard=true;
+			}
+		}
+	}
+	else {
+		for(int i=5;i>=0;i--) {
+			if(!board.getStack(i).isEmpty()){
+				checkerOnHomeBoard = true;
+			}
+		}
+	}
+	
+	return checkerOnHomeBoard;
+}
 }
