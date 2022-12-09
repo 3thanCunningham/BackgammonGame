@@ -204,5 +204,19 @@ public class Board {
 		
 	}
 	
+	public ScoreType getScoreType(boolean isCheckerOnHomeBoard) { //board
+		
+		ScoreType score = ScoreType.SINGLE;
+		
+		if(playerTwoBear==0 || playerOneBear == 0) {
+			score = ScoreType.GAMMON;
+			if(!bar.isEmpty() || isCheckerOnHomeBoard) {
+				score = ScoreType.BACKGAMMON;
+			}		
+		}
+		
+		return score;
+	}
+	
 }
 
