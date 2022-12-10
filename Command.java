@@ -57,6 +57,9 @@ public class Command {
 		
 	}
 	
+	public boolean isInvalid() {
+		return commandType== CommandType.INVALID;
+	}
 	
 	public boolean isQuit() {
 		return commandType == CommandType.QUIT;
