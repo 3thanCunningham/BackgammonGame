@@ -4,6 +4,7 @@ public class Score {
 private ScoreType score;
 
 	Score(){
+	/* score defaults to single */
 	score = ScoreType.SINGLE;
 	}
 
@@ -31,11 +32,14 @@ private ScoreType score;
 	}
 	
 	public int getScore(ScoreType scoreType, int doubleCube) {
+		/*points initially set to value on doubling cube*/
 		int points=doubleCube;
 		
+		/* a gammon results in twice the value of the doubling cube value */
 		if(scoreType==ScoreType.GAMMON) {
 			points*=2;
 		}
+		/* a backgammon results in three times the value of the doubling cube value */
 		if(scoreType==ScoreType.BACKGAMMON) {
 			points*=3;
 		}
