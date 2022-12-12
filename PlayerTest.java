@@ -9,9 +9,6 @@ import org.junit.jupiter.api.*;
 
 import org.junit.jupiter.api.Test;
 
-
-
-
 class PlayerTest {
 	private final ByteArrayOutputStream output = new ByteArrayOutputStream();
 	private final PrintStream originalOutput = System.out;
@@ -185,6 +182,16 @@ class PlayerTest {
 			check = false;
 		
 		assertTrue(check);
+		
+		players[0].setScore(5);
+		if(players[0].getScore()==12) {
+			check = true;
+		}
+		else 
+			check = false;
+		
+		assertTrue(check);
+		
 	}
 
 	@Test
