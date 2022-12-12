@@ -16,8 +16,8 @@ class BoardTypeTest {
 		assertEquals(BoardType.valueOf("ANTICLOCKWISE"), player[0].getBoardType());
 		
 		player[1] = new Player("Test Player2");
-		player[1].setBoard(BoardType.ANTICLOCKWISE);
-		assertEquals(BoardType.valueOf("ANTICLOCKWISE"), player[1].getBoardType());
+		player[1].setBoard(BoardType.CLOCKWISE);
+		assertEquals(BoardType.valueOf("CLOCKWISE"), player[1].getBoardType());
 	}
 
 }
