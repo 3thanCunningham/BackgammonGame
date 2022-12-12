@@ -15,7 +15,7 @@ public class BackGammon {
 		names[0] = new Player(display.getName());
 		names[1] = new Player(display.getName());
 		Score score = new Score();
-		
+
 		String input;
 		
 		Game game = new Game();
@@ -75,7 +75,7 @@ public class BackGammon {
 							game.endTurn(false);
 							
 						} else if (command.isHint()) {
-							System.out.println("\nEnter 'r' to roll\nEnter 'p' for your pip count\nEnter 'q' to quit\nEnter 'double' to double the stakes!");
+							display.giveCommandHints();
 							game.endTurn(false);
 							
 						} else if (command.isPipCount()) {
@@ -194,11 +194,18 @@ public class BackGammon {
 					break;
 				}
 				
-				if(board.getBear(1)>board.getBear(2)) {
+				if (command.isRefuse()) {
+					score.setScore(ScoreType.SINGLE);
+					int doubler = score.getScore(score.getScoreType(), board.getDoubleCube());
+					player[board.getWinner()].setScore(doubler);
+					display.announceScore(score, player[board.getWinner()].getName(), doubler);
+				}
+				
+				else if(board.getBear(1)>board.getBear(2)) {
 					score.setScore(board.getScoreType(game.isCheckerOnHomeBoard(player[0].getBoardType())));
 					int doubler = score.getScore(score.getScoreType(), board.getDoubleCube());
 					player[0].setScore(doubler);
-					display.announceScore(score, player[0].getName(), player[0].getScore());
+					display.announceScore(score, player[0].getName(), doubler);
 					
 					
 					}
@@ -206,7 +213,7 @@ public class BackGammon {
 					score.setScore(board.getScoreType(game.isCheckerOnHomeBoard(player[1].getBoardType())));
 					int doubler = score.getScore(score.getScoreType(), board.getDoubleCube());
 					player[1].setScore(doubler);
-					display.announceScore(score, player[1].getName(), player[1].getScore());
+					display.announceScore(score, player[1].getName(), doubler);
 				}
 				
 				if((player[0].getScore()>= matchLength || player[1].getScore()>= matchLength)) {

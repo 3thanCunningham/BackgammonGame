@@ -15,6 +15,7 @@ private ScoreType score;
 		score = scoreType;
 	}
 
+
 	public String toString() {
 		
 		String scoreToString = "single";

@@ -204,6 +204,10 @@ public class Board {
 		
 	}
 	
+	public int getWinner() {
+		return playerOneBear==15 ? 0:1;
+	}
+	
 	public ScoreType getScoreType(boolean isCheckerOnHomeBoard) { //board
 		
 		ScoreType score = ScoreType.SINGLE;
