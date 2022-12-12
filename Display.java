@@ -6,7 +6,6 @@ import java.io.File;  // Import the File class
 public class Display {
 	
 	Scanner in;
-	Scanner in2;
 	Scanner sc;
 	File file;
 	boolean fileIsOpen;
@@ -23,11 +22,11 @@ public class Display {
 	}
 	
 	public int getMatchLength(Game game) {
-		in2 = new Scanner(System.in);
 		int matchLength;
 			do {
 			System.out.print("\nEnter match length (odd): ");	
-			matchLength = in2.nextInt();
+			matchLength = in.nextInt();
+			in.nextLine();
 			game.setMatchLength(matchLength);
 			} while (game.getMatchLength()%2 ==0);
 			
