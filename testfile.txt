@@ -1,0 +1,90 @@
+playerOne
+playerTwo
+3
+double
+accept
+dice 63
+a
+b
+dice 35
+f
+d
+dice 66
+c
+c
+a
+a
+double
+accept
+dice 55
+a
+a
+a
+b
+dice 66
+c
+c
+a
+a
+dice 55
+a
+b
+c
+c
+dice 66
+a
+a
+a
+b
+dice 23
+a
+a
+dice 66
+a
+a
+a
+a
+dice 33
+a
+a
+a
+a
+dice 45
+a
+a
+dice 44
+a
+a
+a
+a
+dice 66
+a
+a
+a
+a
+dice 12
+a
+a
+dice 66
+a
+a
+a
+a
+dice 12
+a
+a
+h
+p
+dice 66
+a
+a
+a
+a
+dice 12
+a
+a
+dice 66
+a
+a
+a
+n
