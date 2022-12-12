@@ -79,7 +79,7 @@ public class BackGammon {
 							game.endTurn(false);
 							
 						} else if (command.isPipCount()) {
-							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].getPipCount(board,player[i]));
+							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].calculatePipCount(board,player[i]));
 							game.endTurn(false);
 							
 						} else if (command.isDoubleCube()) {
