@@ -53,7 +53,11 @@ public class Player {
 		this.pipCount = pipCount;
 	}
 	
-	public int getPipCount(Board board, Player player) {
+	public int getPipCount() {
+		return pipCount;
+	}
+	
+	public int calculatePipCount(Board board, Player player) {
 		pipCount = 0;
 		
 		if(player.getBoardType() == BoardType.CLOCKWISE) {
