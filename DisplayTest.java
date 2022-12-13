@@ -2,12 +2,8 @@ package backgammon;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -25,33 +21,6 @@ class DisplayTest {
 	}
 
 	@Test
-	void testGetName() throws IOException{
-		String name;
-	    final InputStream original = System.in;
-	    final FileInputStream fips = new FileInputStream(new File("testfile2.txt"));
-	    System.setIn(fips);
-	    name = display.getName();
-	    System.setIn(original);
-	    assertEquals("Jerome", name);
-	}
-	
-/*
-	@Test
-	void testGetMatchLength() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testDisplayBoard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetCommand() {
-		fail("Not yet implemented");
-	}
-*/
-	@Test
 	@DisplayName("Check if correct opening screen is displayed")
 	void testOpeningScreen() {
 		System.setOut(new PrintStream(output));
@@ -61,32 +30,7 @@ class DisplayTest {
 		
 		System.setOut(originalOutput);
 	}
-/*
-	@Test
-	void testOpenFile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetCommandFromFile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testHasNextLine() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testIsFileOpen() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCloseFile() {
-		fail("Not yet implemented");
-	}
-*/
+	
 	@Test
 	@DisplayName("Check if correct hints are given")
 	void testGiveCommandHints() {
