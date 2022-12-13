@@ -27,10 +27,13 @@ class BackGammonTest {
 		System.out.println("main");
 	    String[] args = null;
 	    final InputStream original = System.in;
+	    /* user input simulated with test file containg commands*/
+	    /* testfile.txt contains commands to play full game of backgammon to give good testing coverage */
 	    final FileInputStream fips = new FileInputStream(new File("testfile.txt"));
 	    System.setIn(fips);
 	    BackGammon.main(args);
 	    System.setIn(original);
+	    /* can confirm that game has been played to completion by checking if game over message has been output to screen */
 	    assertTrue(outContent.toString().contains("Thanks for playing! Goodbye."));
 	    
 	}
