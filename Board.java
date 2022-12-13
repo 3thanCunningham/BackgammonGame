@@ -1,17 +1,24 @@
 package backgammon;
 import java.util.*;
 
+/*
+ * This class constructs the game board and returns values 
+ * and objects that are needed from the board
+ */
+
 public class Board {
-	 
+
 	public static final int NUM_STACKS = 24;
-	private List<Stack<Checker>> stacks;
-	private Stack<Checker> bar;
+	private List<Stack<Checker>> stacks; // Pip lanes are stacks
+	private Stack<Checker> bar; // Bar is stack
 	private int playerOneBear, playerTwoBear;
 	private Checker WhiteChecker;
 	private Checker RedChecker;
 	private int doubleCube;
 	
 	Board(){
+		
+		// Board holds player bears and double cube
 		playerOneBear =0;
 		playerTwoBear =0;
 		doubleCube = 1;
@@ -26,6 +33,9 @@ public class Board {
 		
 		Checker WhiteChecker = new Checker(CheckerColour.WHITE);
 		Checker RedChecker = new Checker(CheckerColour.RED);
+		
+		// Board is created with initial pip positions
+		// Checkers are pushed into the stacks
 		
 		for(int i=0;i<5;i++) {
 			stacks.get(5).push(WhiteChecker);
@@ -63,6 +73,7 @@ public class Board {
 	}
 	
 	public int maxStackSize(){
+		// Check all sizes of stacks and return the largest
 		int maxStackSize = 0;
 		for (Stack<Checker> stack : stacks) {
 			if (stack.size() > maxStackSize) {
@@ -93,6 +104,7 @@ public class Board {
 	}
 	
 	public boolean StackIndexEmpty(int j, int i) {
+		// Method used to avoid an out of bounds index
 		if(stacks.get(j).size() < i+1)
 			return true;
 		else
@@ -100,7 +112,7 @@ public class Board {
 	}
 	
 	public void move(int point1, int point2) {
-		
+		// Checker movement with stacks
 		if(stacks.get(point1).peek().getColour()==CheckerColour.RED) {
 			stacks.get(point1).pop();
 			stacks.get(point2).push(RedChecker);
@@ -136,6 +148,7 @@ public class Board {
 	}
 	
 	public void pushToStack(int index, CheckerColour colour) {
+		// Method to add a checker to a lane
 		if(colour==CheckerColour.RED) {
 			stacks.get(index).push(RedChecker);
 		}
@@ -145,6 +158,7 @@ public class Board {
 	}
 	
 	public boolean isGameOver() {
+		// Game is over when a player bears-off all checkers
 		boolean isGameOver = false;
 		
 		if(playerOneBear==15 || playerTwoBear==15) {
@@ -154,6 +168,9 @@ public class Board {
 	}
 	
 	public boolean isHomeBoardFull(CheckerColour colour) {
+		// Method to check if a player has all their checkers
+		// in home board. This is used in another class to decide
+		// if player can bear-off yet
 		boolean isHomeBoardFull = false;
 		
 		int checkersInHomeBoard=0;
@@ -196,6 +213,7 @@ public class Board {
 	}
 	
 	public void winGame(int num) {
+		// Make a player instantly win
 		if(num==0) {
 			playerOneBear = 15;
 		}
@@ -208,7 +226,8 @@ public class Board {
 		return playerOneBear==15 ? 0:1;
 	}
 	
-	public ScoreType getScoreType(boolean isCheckerOnHomeBoard) { //board
+	public ScoreType getScoreType(boolean isCheckerOnHomeBoard) {
+		// Method to return how a player won
 		
 		ScoreType score = ScoreType.SINGLE;
 		

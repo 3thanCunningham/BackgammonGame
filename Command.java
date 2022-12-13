@@ -1,5 +1,9 @@
 package backgammon;
 
+/*
+ * This class stores and performs syntax checking on a command
+ */
+
 public class Command {
 	
 	private enum CommandType {QUIT, ROLL, PIPCOUNT, HINT, INVALID, REPLAY, DICE, TEST, DOUBLE, ACCEPT, REFUSE};
@@ -11,6 +15,8 @@ public class Command {
 	
 	public void setCommand (String input) {
 		
+		// If input does not match any command it is invalid
+		// Used to display syntax errors
 		commandType = CommandType.INVALID;
 		
 		String inputFormatted = input.trim().toUpperCase();

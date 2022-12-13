@@ -3,6 +3,12 @@ package backgammon;
 import java.util.*;
 import java.io.File;  // Import the File class
 
+/*
+ * This class prints out board and main messages of game
+ * Has user input handling methods
+ * Has file handing methods
+ */
+
 public class Display {
 	
 	Scanner in;
@@ -11,6 +17,7 @@ public class Display {
 	boolean fileIsOpen;
 
 	Display (){
+		// For user input and file handling
 		in = new Scanner(System.in);
 		fileIsOpen = false;
 	}
@@ -22,6 +29,8 @@ public class Display {
 	}
 	
 	public int getMatchLength(Game game) {
+		// User can choose an odd match length
+		// Is match length entered is even, user is asked again
 		int matchLength;
 			do {
 			System.out.print("\nEnter match length (odd): ");	
@@ -35,6 +44,10 @@ public class Display {
 	}
 	
 	public void displayBoard(Board board, Player player[], int matchLength, int x) {
+		
+		// Custom layout of BackGammon board
+		// Board displays pips, pip numbers, bar, player score, match length, player bear off and doubling cube
+		// Multiple if/else if statements for header and footer due to pip numbering and doubling cube possession
 		
 		System.out.println("\n  -----------------------------------------------------------------");
 		if(player[x].getBoardType() == BoardType.ANTICLOCKWISE && !player[x].hasCube()) {
@@ -139,6 +152,7 @@ public class Display {
 	
 	
 	public String getCommand(Player player) {
+		// User command handling
 		System.out.print("\n" + player.getName() + " enter command: ");
 		String input = in.nextLine();
 		return input;
@@ -148,6 +162,7 @@ public class Display {
 		System.out.println("\n-------------WELCOME TO BACKGAMMON - LETS PLAY!---------------\n");
 	}
 	
+	// File handling methods
 	public void openFile(String filename) {
 		try  
 		{  
@@ -187,6 +202,7 @@ public class Display {
 	}
 	
 	public void giveCommandHints() {
+		// Printed when hint command is called
 		System.out.println("\nEnter 'r' to roll");
 		System.out.println("Enter 'p' for your pip count");
 		System.out.println("Enter 'q' to quit");
@@ -197,6 +213,7 @@ public class Display {
 	}
 	
 	public void announceScore(Score score, String name, int points) {
+		// Announcement for winning a game
 		System.out.println("\n" + name + " won this Game with a " + score.toString() + " and a score of: " + points + "! Get ready for the next one!\n");
 	}
 

@@ -1,5 +1,10 @@
 package backgammon;
 
+/*
+ * This Class constructs a player
+ * Player variables are stored in this class
+ */
+
 public class Player {
 	
 	private BoardType pipNumbers;
@@ -11,6 +16,7 @@ public class Player {
 	private boolean hasCube;
 	
 	Player (String name){
+		// Player variables
 		this.name = name;
 		pipCount = 0;
 		roll = new int[2];
@@ -34,6 +40,7 @@ public class Player {
 	}
 	
 	public void setBoard(BoardType pipNumbers) {
+		// Decides is player has clockwise or anticlockwise board
 		this.pipNumbers = pipNumbers;
 	}
 	
@@ -60,6 +67,8 @@ public class Player {
 	public int calculatePipCount(Board board, Player player) {
 		pipCount = 0;
 		
+		// Goes through the entire board and finds all pips of wanted colour
+		// Distance of a pip from end of board is calculated with formula
 		if(player.getBoardType() == BoardType.CLOCKWISE) {
 		for(int i=0; i<= 23; ++i) {
 			
@@ -69,6 +78,7 @@ public class Player {
 	    	}
 			
 			else if(board.getStack(i).get(0).getColour()== CheckerColour.RED) {
+				// Custom formula used to calculate red pip count
 				pipCount += board.getStackSize(i) * (24-i);
 			}
 		}
@@ -83,6 +93,7 @@ public class Player {
 		    	}
 				
 				else if(board.getStack(j).get(0).getColour()== CheckerColour.WHITE) {
+					// Custom formula used to calculate white pip count
 					pipCount += board.getStackSize(j) * (j+1);
 				}
 			}
@@ -92,6 +103,7 @@ public class Player {
 	}
 	
 	public boolean isDouble() {
+		// Check to see if player rolled same number
 		boolean isDouble = false;
 		if(roll[0]==roll[1]) {
 			isDouble  = true;
@@ -112,6 +124,7 @@ public class Player {
 	}
 	
 	public Player isMatchWinner(Player player[]) {
+		// Returns winner of match by checking scores
 		if(player[0].getScore() > player[1].getScore()) {
 			return player[0];
 		}
@@ -121,6 +134,7 @@ public class Player {
 	}
 	
 	public void announceMatchWinner(Player player[]) {
+		// Different announcements for different win types
 		if(player[0].getScore() > player[1].getScore()) {
 			System.out.println(player[0].getName() + " Won the Match! Congratulations!");
 		}
@@ -133,6 +147,7 @@ public class Player {
 			System.out.println("The Match is Tied! No winner decided!");
 	}
 	
+	// doubling cube methods
 	public void giveCube() {
 		hasCube = true;
 	}
