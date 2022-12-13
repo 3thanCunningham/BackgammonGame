@@ -34,7 +34,7 @@ public class BackGammon {
 
 			/* do-while loop allows for multiple games to be played depending on match length */
 			do {
-				/* do-while loop continues giving player turns unitil game is over */
+				/* do-while loop continues giving player turns until game is over */
 				do {
 					
 				/* for loop facilitates one turn per player */
@@ -90,15 +90,21 @@ public class BackGammon {
 							game.endTurn(false);
 							
 						} else if (command.isPipCount()) {
-							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].getPipCount(board,player[i]));
+							System.out.println("\n" + player[i].getName()+ "'s Pip Count : " + player[i].calculatePipCount(board,player[i]));
 							game.endTurn(false);
 							
 						} else if (command.isDoubleCube()) {
 							
+							/* 
+							* Player indexes are 0 or 1
+							* (i+1)%2 is a way of changing a 0 to a 1 or 1 to a 0
+							* It is used in this to refer to the other player
+							*/
 							if ((player[i].hasCube()==false && player[(i+1)%2].hasCube()==false) ||
-								(player[i].hasCube()==true && player[(i+1)%2].hasCube()==false)){
+								(player[i].hasCube()==true && player[(i+1)%2].hasCube()==false)){ 
+								// Conditions of the initial double and redouble
 							System.out.println("\n" + player[i].getName()+ " is offering a double, " + player[(i+1)%2].getName() + " Do you accept? (accept/refuse):");
-							do {
+							do { // Ask player again for input if it is invalid
 							input = display.getCommand(player[(i+1)%2]);
 							command.setCommand(input);
 							if(!command.isValid()) {
@@ -107,12 +113,13 @@ public class BackGammon {
 							}while(!command.isValid());
 							
 							if(command.isAccept()) {
-								board.doubleCube();
-								player[i].takeCube();
-								player[(i+1)%2].giveCube();
+								board.doubleCube(); // Double the stakes
+								player[i].takeCube(); // Take cube from offering player
+								player[(i+1)%2].giveCube(); // Accepting player takes possession
 							}
 							
 							if(command.isRefuse()) {
+								// If player refuses, the offering player wins the game
 								board.winGame(i);
 								break;
 							}
@@ -121,6 +128,7 @@ public class BackGammon {
 							}
 							
 							else {
+								// Unless it is initial double, a player can't double if they don't have the cube
 								System.out.println("\nYou don't have the cube, you can't double!");
 								game.endTurn(false);
 							}
